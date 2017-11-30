@@ -1,0 +1,21 @@
+{
+    "common": {
+        "name":                     "hyperion",
+        "version":                  "0.0.1",
+        "title":                    "iobroker hyperion  Adapter",
+        "desc":                     "Javascript/Node.js based hyperion adapter",
+        "platform":                 "Javascript/Node.js",
+        "mode":                     "daemon",
+        "icon":                     "hyperion.png",
+        "extIcon":                  "http://zuhause.muffbu.de/hyperion/hyperion.png",
+        "loglevel":                 "info",
+        "nondeletable":             true
+    },
+    "native": {
+        "address": "127.0.0.1",
+        "json_port": 19448
+    },
+    "objects": [
+
+    ]
+}
