@@ -5,7 +5,7 @@ ioBroker hyperion Adapter
 Control and configure Hyperion Lights.
 
 
-### 0.0.0 (2015-14-04)
+### 0.0.0 (2017-30-11)
 Pre Release
 Known Bugs and Issues:
 This is a very early release, and it's not yet finished.
