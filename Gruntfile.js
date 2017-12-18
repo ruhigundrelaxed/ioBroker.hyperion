@@ -86,7 +86,7 @@ module.exports = function (grunt) {
             get_iconOnline: {
                 options: {
                     encoding: null,
-                    url: iopackage.common.extIcon || 'http://zuhause.muffbu.de/boblight/boblight.png'
+                    url: iopackage.common.extIcon || 'https://github.com/ruhigundrelaxed/iobroker.hyperion/raw/master/admin/hyperion.png'
                 },
                 dest: dstDir + 'ioBroker.adapter.' + iopackage.common.name + '.png'
 
@@ -94,7 +94,7 @@ module.exports = function (grunt) {
             get_iconOffline: {
                 options: {
                     encoding: null,
-                    url: iopackage.common.extIcon || 'http://zuhause.muffbu.de/motion/motion.png'
+                    url: iopackage.common.extIcon || 'https://github.com/ruhigundrelaxed/iobroker.hyperion/raw/master/admin/hyperion.png'
                 },
                 dest: dstDir + 'ioBroker.adapter.offline.' + iopackage.common.name + '.png'
 
