@@ -5,6 +5,17 @@ ioBroker hyperion Adapter
 Control and configure Hyperion Lights.
 
 
+### 0.0.1 (2017-18-12)
+Still Pre Release
+Fixed Bugs:
+1.) Ignoring Adapter configuration Bug -> Fixed
+2.) Missing Icon -> Fixed
+3.) Effect Parametrisation -> Implemented
+4.) Switch to Color Bug -> Fixed
+
+Todo 4 0.0.2 -> Implement Clear and Clear all
+
+
 ### 0.0.0 (2017-30-11)
 Pre Release
 Known Bugs and Issues:
