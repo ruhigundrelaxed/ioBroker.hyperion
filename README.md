@@ -7,6 +7,7 @@ Control and configure Hyperion Lights.
 
 ### 0.0.1 (2017-18-12)
 Still Pre Release
+
 Fixed Bugs:
 1.) Ignoring Adapter configuration Bug -> Fixed
 2.) Missing Icon -> Fixed
