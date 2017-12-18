@@ -6,13 +6,13 @@ Control and configure Hyperion Lights.
 
 
 ### 0.0.1 (2017-18-12)
-Still Pre Release
-
-Fixed Bugs:
-1.) Ignoring Adapter configuration Bug -> Fixed
-2.) Missing Icon -> Fixed
-3.) Effect Parametrisation -> Implemented
-4.) Switch to Color Bug -> Fixed
+Still Pre Release<br>
+<br>
+Fixed Bugs:<br>
+1.) Ignoring Adapter configuration Bug -> Fixed<br>
+2.) Missing Icon -> Fixed<br>
+3.) Effect Parametrisation -> Implemented<br>
+4.) Switch to Color Bug -> Fixed<br>
 
 Todo 4 0.0.2 -> Implement Clear and Clear all
 
