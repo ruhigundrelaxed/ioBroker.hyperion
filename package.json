@@ -13,7 +13,8 @@
   "dependencies": {
       "fs": "",
       "get-pixels": "",
-      "hyperion-client" : ""
+      "hyperion-client" : "",
+      "type-of-is" : ""
   },
   "devDependencies": {
     "grunt": "~0.4.4",
