@@ -8,7 +8,7 @@ var adapter = utils.adapter('hyperion');
 //var scene = {};
 //var all_scene = [];
 //var scenes = {};
-//var Hyperion = require('hyperion-client');
+var Hyperion = require('hyperion-client');
 //var Type = require('type-of-is');
 var hyperion;
 //var friendlyname_translator = new Array();
