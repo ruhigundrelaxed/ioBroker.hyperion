@@ -28,8 +28,9 @@ Please don't use it. It's not ready.
 
 ## Install & Configuration
 
-1st.)   Install Hyperion and configure it. Test if all runs correctly.
-2nd.)   Install this Adapter on iobroker, and configure ip and port of hyperion json interface.
+1st.)   Install Hyperion and configure it. Test if all runs correctly. <br>
+2nd.)   Install this Adapter on iobroker, and configure ip and port of hyperion json interface.<br>
+        (change to iobroker dir and execute:  "npm install https://github.com/ruhigundrelaxed/iobroker.hyperion.git")
 
 
 
