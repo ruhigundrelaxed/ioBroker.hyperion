@@ -96,6 +96,21 @@ function setcolorHSL(hue, sat, lum){
     setactiveColor_on_hyperion(myrgb[0]+ "," + myrgb[1] + "," + myrgb[2]);
 }
 
+function clean_number(number){
+
+	if (number < 0) {
+		number = number * (-1);
+	};
+	
+	if (number > 255){
+			number = number / 10000;
+	};
+      	
+	return number;
+
+	
+};
+
 function setactiveColor_on_hyperion(color){    
   adapter.log.info(color);
     var myrgb = color.split(',');
