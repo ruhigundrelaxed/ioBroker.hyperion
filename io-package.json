@@ -3,7 +3,7 @@
         "name":                     "hyperion",
         "version":                  "0.0.1",
         "title":                    "hyperion",
-        "titleLang":                "hyperion"
+        "titleLang":                "hyperion",
         "desc":                     {
             "en": "Adapter to control the hyperion daemon.",
             "de": "Adapter, um den Hyperion-Daemon zu steuern.",
