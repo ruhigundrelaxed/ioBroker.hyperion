@@ -28,5 +28,151 @@
     },
     "objects": [
 
+    ],
+    "instanceObjects": [
+        {
+            "_id": "adjustment",
+            "type": "device",
+            "common": {
+                "name": "adjustment"
+            },
+            "native": {}
+        },
+
+
+        {
+            "_id": "effects",
+            "type": "device",
+            "common": {
+                "name": "effects"
+            },
+            "native": {}
+        },
+
+        {
+            "_id": "control",
+            "type": "channel",
+            "common": {
+                "name": "control",
+                "role": "light.color"
+            },
+            "native": {}
+        },
+
+
+        {
+            "_id": "control.activeColorRGB",
+            "type": "state",
+            "common": {
+                "name": "activeColorRGB",
+                "role": "level.color.rgb",
+                "read": true,
+                "write": true,
+                "desc": "Color in RGB"
+            },
+            "native": {}
+        },
+
+
+        {
+            "_id": "control.activeColorHue",
+            "type": "state",
+            "common": {
+                "type": "number",
+                "name": "activeColorHue",
+                "role": "level.color.hue",
+                "read": true,
+                "write": true,
+                "desc": "Color HUE"
+
+
+            },
+            "native": {}
+        },
+        {
+            "_id": "control.activeColorSat",
+            "type": "state",
+            "common": {
+                "name": "activeColorSat",
+                "type": "number",
+                "role": "level.color.saturation",
+                "read": true,
+                "write": true,
+                "min":   0,
+                "max":   100,
+                "unit":  "%",
+                "desc": "Color Saturation"
+            },
+            "native": {}
+        },
+        {
+            "_id": "control.activeColorLum",
+            "type": "state",
+            "common": {
+                "name": "activeColorLum",
+                "type": "number",
+                "role": "level.dimmer",
+                "read": true,
+                "write": true,
+                "min":   0,
+                "max":   100,
+                "unit":  "%",
+                "desc": "Color Saturation"
+            },
+            "native": {}
+        },
+
+        {
+            "_id": "control.activeEffects",
+            "type": "state",
+            "common": {
+                "name": "activeEffects",
+                "type": "string",
+                "role": "message",
+                "read": true,
+                "write": true,
+                "desc": "Currently active Effect"
+            },
+            "native": {}
+        },
+        {
+            "_id": "control.LightSwitch",
+            "type": "state",
+            "common": {
+                "name": "LightSwitch",
+                "type": "state",
+                "role": "switch",
+                "read": true,
+                "write": true,
+                "desc": "Currently active Effect"
+            },
+            "native": {}
+        },
+        {
+            "_id": "control.clear",
+            "type": "state",
+            "common": {
+                "name": "clear",
+                "type": "state",
+                "role": "button",
+                "read": true,
+                "write": true,
+                "desc": "Clear current prio"
+            },
+            "native": {}
+        },
+        {
+            "_id": "control.clearall",
+            "type": "state",
+            "common": {
+                "name": "clearall",
+                "type": "state",
+                "role": "button",
+                "read": true,
+                "write": true,
+                "desc": "Clear all prio"
+            },
+            "native": {}
+        }
     ]
 }
