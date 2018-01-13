@@ -20,7 +20,9 @@
         "icon":                     "hyperion.png",
         "extIcon":                  "https://github.com/ruhigundrelaxed/iobroker.hyperion/blob/master/admin/hyperion.png",
         "loglevel":                 "info",
-        "nondeletable":             true
+        "nondeletable":             true,
+        "materialize": true
+
     },
     "native": {
         "address": "127.0.0.1",
