@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "hyperion",
-        "version":                  "0.0.1",
+        "version":                  "0.0.9",
         "title":                    "hyperion",
         "titleLang":                "hyperion",
         "desc":                     {
@@ -26,7 +26,7 @@
     },
     "native": {
         "address": "127.0.0.1",
-        "json_port": 19448
+        "json_port": 19444
     },
     "objects": [
 
