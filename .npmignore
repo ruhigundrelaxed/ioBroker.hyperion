@@ -1,0 +1,15 @@
+Gruntfile.js
+gulpfile.js
+tasks
+package-lock.json
+node_modules
+.git
+.idea
+test
+docs
+.travis.yml
+src
+.gitignore
+DEVELOPER.md
+admin/i18n
+appveyor.yml
