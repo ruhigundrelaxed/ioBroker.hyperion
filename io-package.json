@@ -2,8 +2,19 @@
     "common": {
         "name":                     "hyperion",
         "version":                  "0.0.1",
-        "title":                    "iobroker hyperion  Adapter",
-        "desc":                     "Javascript/Node.js based hyperion adapter",
+        "title":                    "hyperion",
+        "titleLang":                "hyperion"
+        "desc":                     {
+            "en": "Please describe here what is that",
+            "de": "Bitte beschreiben Sie hier, was das ist",
+            "ru": "Опишите здесь, что это такое",
+            "pt": "Por favor, descreva aqui o que é isso",
+            "nl": "Beschrijf hier alsjeblieft wat dat is",
+            "fr": "S'il vous plaît décrire ici ce que c'est",
+            "it": "Per favore descrivi qui cos'è",
+            "es": "Por favor describe aquí que es eso",
+            "pl": "Proszę opisać tutaj, co to jest"
+          },
         "platform":                 "Javascript/Node.js",
         "mode":                     "daemon",
         "icon":                     "hyperion.png",
