@@ -1,6 +1,6 @@
 "use strict";
 var utils =    require(__dirname + '/lib/utils'); // Get common adapter utils
-var adapter = utils.adapter('hyperion');
+var adapter = new utils.Adapter('hyperion');
 var Hyperion = require('hyperion-client');
 var convert = require('color-convert');
 var hyperion;
