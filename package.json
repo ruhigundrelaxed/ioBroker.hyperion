@@ -12,7 +12,7 @@
   },
   "dependencies": {
       "fs": "",
-      "get-pixels": "",
+      "color-convert": "",
       "hyperion-client" : "",
       "type-of-is" : ""
   },
