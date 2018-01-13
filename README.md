@@ -11,6 +11,11 @@ Control and configure Hyperion Lights.
 
 
 ## Changelog
+
+### 0.0.9 (2018-13-01)
+Massive clean up, and stuff. 
+
+
 ### 0.0.1 (2017-18-12)
 Still Pre Release<br>
 <br>
