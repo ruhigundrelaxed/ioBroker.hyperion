@@ -1,18 +1,9 @@
 "use strict";
 var utils =    require(__dirname + '/lib/utils'); // Get common adapter utils
-// you have to call the adapter function and pass a options object
-// name has to be set and has to be equal to adapters folder name and main file name excluding extension
-// adapter will be restarted automatically every time as the configuration changed, e.g system.adapter.example.0
 var adapter = utils.adapter('hyperion');
-//var jf = require('jsonfile');
-//var scene = {};
-//var all_scene = [];
-//var scenes = {};
 var Hyperion = require('hyperion-client');
-//var Type = require('type-of-is');
+var convert = require('color-convert');
 var hyperion;
-//var friendlyname_translator = new Array();
-// is called when adapter shuts down - callback has to be called under any circumstances!
 adapter.on('unload', function (callback) {
     try {
         adapter.log.info('cleaned everything up...');
@@ -45,40 +36,80 @@ adapter.on('objectChange', function (id, obj) {
 adapter.on('stateChange', function (id, state) {
     if (!state.ack) {
         var id_arr = id.split('.');
-        if (id_arr[id_arr.length - 1] === 'activator'){
+        if (id_arr[id_arr.length - 1] === 'activator') {
             setEffect_on_hyperion(id);
-        }else if(id_arr[2] === 'activeColor'){
+        } else if (id_arr[2] === 'activeColor') {
             console.log(JSON.stringify(state));
             var myval = state.val;
             console.log(myval);
+            //setactiveColor_on_hyperion(myval);
+        } else if (id_arr[3] === 'activeColorRGB') {
+            adapter.log.info(JSON.stringify(state));
+            var myval = state.val;
+            console.log(myval);
             setactiveColor_on_hyperion(myval);
+        } else if (id_arr[3] === 'clear') {
+            hyperion.clear(function(err, state){
+               adapter.log.info(state);
+            });
+            //adapter.getState("activeColorRGB", adapter.log.info());
+        } else if (id_arr[3] === 'clearall') {
+
+            hyperion.clearall(function(state,err){
+                adapter.log.info(state);
+            });
+        } else if (id_arr[3] === 'activeColorLum') {
+            var mylum = state.val;
+            adapter.getState("control.activeColorSat", function(err, state){
+              var mysat = state.val || 0;
+                adapter.getState("control.activeColorHue", function(err, state){
+                    var myhue = state.val || 0;
+                    setcolorHSL(myhue, mysat, mylum);
+                }.bind(mysat).bind(mylum));
+            }.bind(mylum));
+        } else if (id_arr[3] === 'activeColorSat') {
+            var mysat = state.val;
+            adapter.getState("control.activeColorLum", function(err, state){
+                var mylum = state.val || 0;
+                adapter.getState("control.activeColorHue", function(err, state){
+                    var myhue = state.val || 0;
+                    setcolorHSL(myhue, mysat, mylum);
+                }.bind(mysat).bind(mylum));
+            }.bind(mysat));
+
+        } else if (id_arr[3] === 'activeColorHue') {
+            var myhue = state.val;
+            adapter.getState("control.activeColorSat", function(err, state){
+                var mysat = state.val || 0;
+                adapter.getState("control.activeColorLum", function(err, state){
+                    var mylum = state.val || 0;
+                    setcolorHSL(myhue, mysat, mylum);
+                }.bind(mysat).bind(myhue));
+            }.bind(myhue));
         }
     }
 });
 
+function setcolorHSL(hue, sat, lum){
+    var myrgb = convert.hsl.rgb(hue, sat, lum);
+    adapter.log.info("HUE " + hue + " Sat " + sat + " LUM " + lum + " RGB " + myrgb);
+    setactiveColor_on_hyperion(myrgb[0]+ "," + myrgb[1] + "," + myrgb[2]);
+}
 
-
-function setactiveColor_on_hyperion(color){
+function setactiveColor_on_hyperion(color){    
+  adapter.log.info(color);
     var myrgb = color.split(',');
-    myrgb[0] = parseInt(myrgb[0]);
-    myrgb[1] = parseInt(myrgb[1]);
-    myrgb[2] = parseInt(myrgb[2]);
+    myrgb[0] = clean_number(parseInt(myrgb[0]));
+    myrgb[1] = clean_number(parseInt(myrgb[1]));
+    myrgb[2] = clean_number(parseInt(myrgb[2]));
     hyperion.setColor(myrgb, function( err, result ){
         if (!err) {
-            console.log(JSON.stringify(result.info.activeLedColor[0]));
-            var my_color_obj = result.info.activeLedColor[0]['HSL Value'];
-            console.log(my_color_obj[1]);
-            adapter.setObject('activeColorHSL', my_color_obj[0],my_color_obj[1],my_color_obj[2],true);
             adapter.log.info('Set Color: ' + myrgb);
         } else {
             adapter.log.warning(JSON.stringify(err));
         }
     })
 }
-
-
-
-
 
 function setEffect_on_hyperion(id){
     id = id.replace('activator','effects_effect_name');
@@ -115,7 +146,7 @@ function setEffect_on_hyperion(id){
                 hyperion.setEffect(myname, myargument_object, function( err, result ) {
                     console.log(myname);
                     if (!err) {
-                        adapter.setState('activeEffects', myname);
+                        adapter.setState('contorl.activeEffects', myname);
                         adapter.log.info('Set effect: ' + myname);
                         //console.log(JSON.stringify(result));
                     } else {
@@ -134,7 +165,7 @@ adapter.on('ready', function () {
 function main() {
 
 
-    hyperion = new Hyperion( adapter.config['address']  || '127.0.0.1', adapter.config['json_port'] || 19446 );
+    hyperion = new Hyperion( adapter.config['address']  || '127.0.0.1', adapter.config['json_port'] || 19444 );
     var Type = require('type-of-is');
     hyperion.on('connect', function(){
         console.log('connected');
@@ -145,14 +176,8 @@ function main() {
 
                 var mydevice = {type: 'device',common: {name: 'effects'}, native:{id: 'effects'}};
                 adapter.setObject('effects', mydevice);
-                var my_active_effect_obj = {type: 'state', common: {role: 'text', type: 'text', name:'activeEffects'}, native:{id: 'activeEffects'}};
-                adapter.setObject('activeEffects', my_active_effect_obj);
-                var my_color_switch_obj = {type: 'state', common: {role: 'level.color.rgb',  name: 'activeColor'}, native:{id: 'activeColor'}};
-                adapter.setObject('activeColor', my_color_switch_obj);
-                var my_color_switch_obj_hsl = {type: 'state', common: {role: 'level.color.hsl',  name: 'activeColorHSL'}, native:{id: 'activeColor'}};
-                adapter.setObject('activeColorHSL', my_color_switch_obj_hsl);
-                var my_color_switch_obj_hue = {type: 'state', common: {role: 'level.color.hue',  name: 'activeColorHUE'}, native:{id: 'activeColor'}};
-                adapter.setObject('activeColorHUE', my_color_switch_obj_hue);
+
+
 
                 for (var effect in my_effects){
                     var new_effect = {};
@@ -163,7 +188,7 @@ function main() {
                     adapter.setObject('effects' + '.' + my_effect_friendly_name , myeffect_obj);
                     var my_effect_args = my_effects[effect].args;
 
-                    var my_activator_switch = {type: 'state', common: {role: 'button',  name: 'activator'}, native:{id: 'effects' + my_effect_friendly_name + '.activator'}};
+                    var my_activator_switch = {type: 'state', common: {role: 'button',   type:'switch', name: 'activator'}, native:{id: 'effects' + my_effect_friendly_name + '.activator'}};
                     adapter.setObject('effects' + '.' + my_effect_friendly_name  + '.activator' , my_activator_switch);
 
                     /*var my_color_switch = {type: 'state', common: {role: 'evel.color.rgb',  name: 'activeColor'}, native:{id: 'effects' + my_effect_friendly_name + '.activeColor'}};
@@ -230,43 +255,3 @@ function main() {
 
     adapter.subscribeStates('*');
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
