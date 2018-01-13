@@ -1,10 +1,16 @@
 ![Logo](admin/hyperion.png)
-ioBroker hyperion Adapter
+# ioBroker hyperion Adapter
 ==============
 
 Control and configure Hyperion Lights.
 
+## Install & Configuration
 
+1st.)   Install Hyperion and configure it. Test if all runs correctly. <br>
+2nd.)   Install this Adapter on iobroker, and configure ip and port of hyperion json interface.<br>
+        (change to iobroker dir and execute:  "npm install https://github.com/ruhigundrelaxed/iobroker.hyperion.git")
+
+## Changelog
 ### 0.0.1 (2017-18-12)
 Still Pre Release<br>
 <br>
@@ -23,23 +29,11 @@ Known Bugs and Issues:
 This is a very early release, and it's not yet finished.
 Please don't use it. It's not ready.
 
-
-
-
-## Install & Configuration
-
-1st.)   Install Hyperion and configure it. Test if all runs correctly. <br>
-2nd.)   Install this Adapter on iobroker, and configure ip and port of hyperion json interface.<br>
-        (change to iobroker dir and execute:  "npm install https://github.com/ruhigundrelaxed/iobroker.hyperion.git")
-
-
-
-
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2015 ruhigundrelaxed
+Copyright (c) 2018 ruhigundrelaxed
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
