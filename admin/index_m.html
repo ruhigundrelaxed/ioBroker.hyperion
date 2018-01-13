@@ -1,0 +1,76 @@
+<html>
+
+
+<link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+
+<script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+
+<script type="text/javascript" src="../../js/translate.js"></script>
+<script type="text/javascript" src="../../lib/js/materialize.js"></script>
+<script type="text/javascript" src="../../js/adapter-settings.js"></script>
+<script type="text/javascript" src="words.js"></script>
+
+
+<!-- you have to define 2 functions in the global scope: -->
+<script type="text/javascript">
+
+    // Dictionary (systemDictionary is global variable from adapter-settings.js)
+    systemDictionary = {
+        "Hyperion adapter settings": {"de": "Hyperion Adapter Einstellungen!", "ru": "???"},
+        "address":                    {"en": "Hyperion IP address!", "de": "Hyperion IP address!", "ru": "???"},
+        "json_port":                    {"en": "Hyperion json port!", "de": "Hyperion json port!", "ru": "???"},
+        "on save adapter restarts with new config immediately": {
+            "de": "Beim Speichern von Einstellungen der Adapter wird sofort neu gestartet.!",
+            "ru": "Сразу после сохранения настроек драйвер перезапуститься с новыми значениями"
+        }
+
+    };
+
+    // the function loadSettings has to exist ...
+    function load(settings, onChange) {
+        // example: select elements with id=key and class=value and insert value
+        for (var key in settings) {
+            // example: select elements with id=key and class=value and insert value
+            if ($('#' + key + '.value').attr('type') == 'checkbox') {
+                $('#' + key + '.value').prop('checked', settings[key]).change(onChange);
+            } else {
+                $('#' + key + '.value').val(settings[key]).change(onChange).keyup(onChange);
+            }
+        }
+        // Signal to admin, that no changes yet
+        onChange(false);
+    }
+
+    // ... and the function save has to exist.
+    // you have to make sure the callback is called with the settings object as first param!
+    function save(callback) {
+        // example: select elements with class=value and build settings object
+        var obj = {};
+        $('.value').each(function () {
+            var $this = $(this);
+            obj[$this.attr('id')] = $this.val();
+        });
+        callback(obj);
+    }
+</script>
+
+<!-- you have to put your config page in a div with id adapter-container -->
+<div class="m adapter-container">
+
+
+    <table><tr>
+        <td><img src="Hyperion.png"/></td>
+        <td><h3 class="translate">Hyperion adapter settings</h3></td>
+    </tr></table>
+    <p>
+        <span class="translate">address</span> <input class="value" id="address"/><br>
+        <span class="translate">json_port</span> <input class="value" id="json_port"/><br>
+    </p>
+
+    <p class="translate">on save adapter restarts with new config immediately</p>
+
+</div>
+
+</html>
