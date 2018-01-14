@@ -8,7 +8,7 @@
   "keywords": ["ioBroker", "hyperion"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ruhigundrelaxed/iobroker.hyperion.git"
+    "url": "https://github.com/ruhigundrelaxed/ioBroker.hyperion.git"
   },
   "dependencies": {
       "fs": "",
