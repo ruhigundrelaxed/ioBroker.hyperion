@@ -2,6 +2,12 @@
 # ioBroker hyperion Adapter
 ==============
 
+[![NPM version](http://img.shields.io/npm/v/iobroker.hyperion.svg)](https://www.npmjs.com/package/iobroker.hyperion)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.hyperion.svg)](https://www.npmjs.com/package/iobroker.hyperion)
+
+[![NPM](https://nodei.co/npm/iobroker.hyperion.png?downloads=true)](https://nodei.co/npm/iobroker.hyperion/)
+
+
 Control and configure Hyperion Lights.
 
 ## Install & Configuration
