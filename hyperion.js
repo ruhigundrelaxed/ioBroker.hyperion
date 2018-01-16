@@ -47,7 +47,7 @@ adapter.on('stateChange', function (id, state) {
             adapter.log.info(JSON.stringify(state));
             var myval = state.val;
             console.log(myval);
-            setactiveColor_on_hyperion(myval);
+            setactiveColor_on_hyperion_rgb(myval);
         } else if (id_arr[3] === 'clear') {
             hyperion.clear(function(err, state){
                adapter.log.info(state);
@@ -125,6 +125,24 @@ function setactiveColor_on_hyperion(color){
         }
     })
 }
+
+function setactiveColor_on_hyperion_rgb(color){
+  adapter.log.info(color);
+    var myrgb = convert.hex.rgb(color);
+    myrgb[0] = clean_number(parseInt(myrgb[0]));
+    myrgb[1] = clean_number(parseInt(myrgb[1]));
+    myrgb[2] = clean_number(parseInt(myrgb[2]));
+    hyperion.setColor(myrgb, function( err, result ){
+        if (!err) {
+            adapter.log.info('Set Color: ' + myrgb);
+        } else {
+            adapter.log.warning(JSON.stringify(err));
+        }
+    })
+}
+
+
+
 
 function setEffect_on_hyperion(id){
     id = id.replace('activator','effects_effect_name');
