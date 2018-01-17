@@ -133,18 +133,18 @@ function setcolorHSL(hue, sat, lum){
 
 function clean_number(number){
 var output_number;
-        if (number < 0) {
+	if (number < 0) {
         output_number = number * (-1);
-        }
-        if (number > 255){
+	}
+	if (number > 255){
         output_number = number / 10000;
-        }
-        if ( number !== output_number){
-           adapter.log.warn("The number :" + number  + " was cleaned to " + output_number + " ! This usually should not happen.")
+	}
+	if ( output_number){
+	   adapter.log.warn("The number :" + number  + " was cleaned to " + output_number + " ! This usually should not happen.");
+	   return output_number;
     }
-        return output_number;
+	return number;
 }
-
 function setactiveColor_on_hyperion(color){
   adapter.log.info("Setting color to" + color);
     var myrgb = color.split(',');
