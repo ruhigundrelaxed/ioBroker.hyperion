@@ -17,6 +17,10 @@ Control and configure Hyperion Lights.
 
 
 ## Changelog
+### 0.0.10 (2018-17-01)
+Again massive clean up. Cleared some warnings regarding missing attributes, implemented error handling, 
+added connection monitoring... 
+
 
 ### 0.0.9 (2018-13-01)
 Massive clean up, and stuff. 
