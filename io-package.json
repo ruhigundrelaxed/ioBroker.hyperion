@@ -27,7 +27,8 @@
     },
     "native": {
         "address": "127.0.0.1",
-        "json_port": 19444
+        "json_port": 19444,
+        "prio": 100
     },
     "objects": [
 
