@@ -29,11 +29,13 @@
 
     // Dictionary (systemDictionary is global variable from adapter-settings.js)
     systemDictionary = {
-        "Hyperion adapter settings": {"de": "Hyperion Adapter Einstellungen!", "ru": "???"},
-        "address":                    {"en": "Hyperion IP address!", "de": "Hyperion IP address!", "ru": "???"},
-        "json_port":                    {"en": "Hyperion json port!", "de": "Hyperion json port!", "ru": "???"},
+        "Hyperion adapter settings":    {"en": "Hyperion adapter settings","de": "Hyperion Adapter Einstellungen", "ru": "???"},
+		"Settings":                     {"en": "settings","de": "Einstellungen", "ru": "???"},
+        "address":                      {"en": "Hyperion IP address!", "de": "Hyperion IP Addresse", "ru": "???"},
+        "json_port":                    {"en": "Hyperion json port!", "de": "Hyperion json Port", "ru": "???"},
+		"priority":                     {"en": "Priority", "de": "Priorität", "ru": "priority"},
         "on save adapter restarts with new config immediately": {
-            "de": "Beim Speichern von Einstellungen der Adapter wird sofort neu gestartet.!",
+            "de": "Beim Speichern von Einstellungen der Adapter wird sofort neu gestartet.",
             "ru": "Сразу после сохранения настроек драйвер перезапуститься с новыми значениями"
         }
 
@@ -67,20 +69,69 @@
     }
 </script>
 
+<style>
+    td {
+        font-size: 13px;
+        padding-left:1px;
+        padding-right: 4px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+    input {
+        font-size: 13px;
+    }
+    h1 {
+        font-size: 11px;
+        color: #505050;
+        font-weight: bold;
+        width: 100%;
+        padding-left:6px;
+        padding-right: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: #e0e0e0;
+        /*background-image: linear-gradient(to right, #e0e0e0, rgba(224,224,224,0.0));*/
+        /*background-image: linear-gradient(to right, #e0e0e0, #e8e8e8 50%, #e0e0e0);*/
+    }
+</style>
+
 <!-- you have to put your config page in a div with id adapter-container -->
-<div id="adapter-container">
+<div id="adapter-container" style="padding-left: 6px; padding-right: 0px; width: 97%;">
 
-    <table><tr>
-        <td><img src="Hyperion.png"/></td>
-        <td><h3 class="translate">Hyperion adapter settings</h3></td>
-    </tr></table>
-    <p>
-        <span class="translate">address</span> <input class="value" id="address"/><br>
-        <span class="translate">json_port</span> <input class="value" id="json_port"/><br>
-        <span class="translate">priority</span> <input class="value" id="prio"/><br>
-    </p>
-
-    <p class="translate">on save adapter restarts with new config immediately</p>
+    <table>
+		<tr>
+			<td><img src="hyperion.png"/></td>
+			<td style="padding-top: 20px;padding-left: 10px"><h3 class="translate">Hyperion adapter settings</h3></td>
+		</tr>
+	</table>
+	
+	    <h1 class="translate">Settings</h1>
+		
+	<table>
+	    <tr>
+           <td><label class="translate" for="address">address</label></td>
+           <td><input type="text" id="address" size="12" class="value"/></td>
+           </select></td>
+        </tr>
+	    <tr>
+           <td><label class="translate" for="json_port">json_port</label></td>
+           <td><input type="text" id="json_port" size="2" class="value"/></td>
+           </select></td>
+        </tr>
+		<tr>
+           <td><label class="translate" for="priority">priority</label></td>
+           <td><input type="text" id="priority" size="1" class="value"/></td>
+           </select></td>
+        </tr>
+	</table>
+    <table>
+        <tr colspan="3"><td class="translate">on save adapter restarts with new config immediately</td></tr>
+    </table> 	
+	<table>
+		<tr>
+			<h1><img src="hyperion2.png"/></h1>
+		</tr>
+	</table>
 
 </div>
 
