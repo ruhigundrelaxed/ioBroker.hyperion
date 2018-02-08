@@ -21,6 +21,7 @@
         "extIcon":                  "https://github.com/ruhigundrelaxed/ioBroker.hyperion/raw/master/admin/hyperion.png",
         "loglevel":                 "info",
         "nondeletable":             true,
+        "readme": "https://github.com/ruhigundrelaxed/ioBroker.hyperion/blob/master/README.md",
         "type": "lighting",
         "materialize": true
 
