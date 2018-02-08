@@ -1,6 +1,6 @@
 {
   "name": "iobroker.hyperion",
-  "version": "0.0.1",
+  "version": "0.0.10",
   "description": "Adapter for using hyperion.",
   "author": "ruhigundrelaxed<martin@qvadrat.de>",
   "homepage": "https://github.com/ruhigundrelaxed/ioBroker.hyperion/",
