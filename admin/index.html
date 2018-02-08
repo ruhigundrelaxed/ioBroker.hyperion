@@ -55,7 +55,7 @@
         // Signal to admin, that no changes yet
         onChange(false);
     }
-
+if (settings.priority === undefined) settings.priority = '100';
     // ... and the function save has to exist.
     // you have to make sure the callback is called with the settings object as first param!
     function save(callback) {
@@ -110,17 +110,17 @@
 	<table>
 	    <tr>
            <td><label class="translate" for="address">address</label></td>
-           <td><input type="text" id="address" size="12" class="value"/></td>
+           <td><input type="text" id="address" size="15" class="value"/></td>
            </select></td>
         </tr>
 	    <tr>
            <td><label class="translate" for="json_port">json_port</label></td>
-           <td><input type="text" id="json_port" size="2" class="value"/></td>
+           <td><input type="text" id="json_port" size="8" class="value"/></td>
            </select></td>
         </tr>
 		<tr>
            <td><label class="translate" for="priority">priority</label></td>
-           <td><input type="text" id="prio" size="1" class="value"/></td>
+           <td><input type="text" id="prio" size="5" class="value"/></td>
            </select></td>
         </tr>
 	</table>
