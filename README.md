@@ -17,6 +17,9 @@ Control and configure Hyperion Lights.
 
 
 ## Changelog
+### 0.0.12 (2018-08-02)
+Admin Side Layout adjustment / added default value for priority
+
 ### 0.0.11 (2018-08-02)
 Added Priority / Updated admin Side / Updated Logo
 
