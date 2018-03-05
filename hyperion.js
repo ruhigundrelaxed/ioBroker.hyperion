@@ -237,7 +237,7 @@ adapter.on('ready', function () {
 function main() {
 
     adapter.setState("info.connection", false, true);
-    hyperion = new Hyperion( adapter.config['address']  || '127.0.0.1', adapter.config['json_port'] || 19444 , adapter.config['prio'] || 100);
+    hyperion = new Hyperion( adapter.config['address']  || '127.0.0.1', adapter.config['json_port'] || 19444 , parseInt(adapter.config['prio']) || 100);
     var Type = require('type-of-is');
     hyperion.on('error', function(error){
         adapter.setState("info.connection", false, true);
