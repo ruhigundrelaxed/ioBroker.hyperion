@@ -17,6 +17,10 @@ Control and configure Hyperion Lights.
 
 
 ## Changelog
+### 0.0.13 (2018-05-03)
+Bugfix (wrong Datatype for Argument prio)
+
+
 ### 0.0.12 (2018-08-02)
 Admin Side Layout adjustment / added default value for priority
 
