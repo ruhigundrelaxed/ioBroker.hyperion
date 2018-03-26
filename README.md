@@ -17,6 +17,10 @@ Control and configure Hyperion Lights.
 
 
 ## Changelog
+### 0.0.14 (2018-26-03)
+Bugfix (State = NULL fix)
+
+
 ### 0.0.13 (2018-05-03)
 Bugfix (wrong Datatype for Argument prio)
 
