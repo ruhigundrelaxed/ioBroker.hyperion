@@ -60,11 +60,21 @@ adapter.on('stateChange', function (id, state) {
                 }
             });
         } else if (id_arr[3] === 'activeColorLum') {
-            var mylum = state.val;
+	    var mylum;
+	    if (!state){
+		   mylum = 0;
+	    }else{
+         	   mylum = state.val || 0;
+	    };	
             adapter.log.debug("Control activeColorLum was set to: " + mylum + "! To do that I have to figure out Hue and Sat as well.");
             adapter.getState("control.activeColorSat", function(err, state){
                 if (!err){
-                    var mysat = state.val || 0;
+		    var mysat;
+		    if (!state) {
+			mysat = 0;
+		    }else{
+			mysat = state.val || 0;
+		    }	
                     adapter.log.debug("Ok! Figured out Sat:" + mysat + " Now figure out HUE!");
                     adapter.getState("control.activeColorHue", function(err, state){
                         if (!err){
@@ -104,11 +114,21 @@ adapter.on('stateChange', function (id, state) {
             adapter.log.debug("Control activeColorHue was set to: " + myhue + "! To do that I have to figure out Sat and Lum as well.");
             adapter.getState("control.activeColorSat", function(err, state){
                 if (!err){
-                    var mysat = state.val || 0;
+		    var mysat;
+		    if (!state) {
+			    mysat = 0;
+		    }else{
+			    mysat = state.val || 0;
+		    }
                     adapter.log.debug("Ok! Figured out Sat:" + mysat + " Now figure out Lum!");
                     adapter.getState("control.activeColorLum", function(err, state){
                         if(!err){
-                            var mylum = state.val || 0;
+                            var mylum;
+			    if (!state){
+				   mylum = 0;
+			    }else{
+				   mylum = state.val || 0;
+			    };
                             adapter.log.debug("Ok! Figured out Hue. So we should have all 3 values. H: " + myhue + " S " + mysat + " L " + mylum + " ! Setting Color...");
                             setcolorHSL(myhue, mysat, mylum);
                         }else{
