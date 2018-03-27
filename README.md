@@ -17,6 +17,12 @@ Control and configure Hyperion Lights.
 
 
 ## Changelog
+
+### 0.0.15 (2018-27-03)
+Changed Logging behaviour for clear and clear all, since node hyperion client is throwing err for clear all on some systems,
+even if everything is working as expected. 
+
+
 ### 0.0.14 (2018-26-03)
 Bugfix (State = NULL fix)
 
