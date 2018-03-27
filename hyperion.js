@@ -47,7 +47,8 @@ adapter.on('stateChange', function (id, state) {
                 if (!err){
                     adapter.log.info("Clearing prio on hyperion!")
                 }else{
-                    adapter.log.warn("Clearing prio failed! The error code is: " + JSON.stringify(err))
+                    adapter.log.info("Clearing prio on hyperion! (with ignored err: watch debug)");			
+                    adapter.log.debug("Clear throws an error. Ignore if its working! Otherwise : " + JSON.stringify(err))
                 }
             });
         } else if (id_arr[3] === 'clearall') {
@@ -56,7 +57,8 @@ adapter.on('stateChange', function (id, state) {
                 if (!err){
                     adapter.log.info("Clearing all prios on hyperion!")
                 }else{
-                    adapter.log.warn("Clearing all prios failed! The error code is: " + JSON.stringify(err))
+		    adapter.log.info("Clearing all prios on hyperion! (with ignored err: watch debug)")
+                    adapter.log.debug("Clear all throws an error. Ignore if its working! Otherwise : " + JSON.stringify(err))
                 }
             });
         } else if (id_arr[3] === 'activeColorLum') {
