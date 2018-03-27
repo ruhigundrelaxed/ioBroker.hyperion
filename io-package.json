@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "hyperion",
-        "version":                  "0.0.14",
+        "version":                  "0.0.15",
         "title":                    "hyperion",
         "titleLang":                "hyperion",
         "desc":                     {
