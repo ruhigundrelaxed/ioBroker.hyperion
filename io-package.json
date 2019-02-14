@@ -4,6 +4,8 @@
         "version":                  "0.0.15",
         "title":                    "hyperion",
         "titleLang":                "hyperion",
+        "license":                  "MIT",
+        "author":                   "ruhigundrelaxed",
         "desc":                     {
             "en": "Adapter to control the hyperion daemon.",
             "de": "Adapter, um den Hyperion-Daemon zu steuern.",
