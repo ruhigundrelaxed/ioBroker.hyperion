@@ -5,7 +5,9 @@
         "title":                    "hyperion",
         "titleLang":                "hyperion",
         "license":                  "MIT",
-        "author":                   "ruhigundrelaxed",
+        "authors":                   [
+                                        "ruhigundrelaxed<martin@qvadrat.de>"
+                                    ],
         "desc":                     {
             "en": "Adapter to control the hyperion daemon.",
             "de": "Adapter, um den Hyperion-Daemon zu steuern.",
@@ -20,7 +22,7 @@
         "platform":                 "Javascript/Node.js",
         "mode":                     "daemon",
         "icon":                     "hyperion.png",
-        "extIcon":                  "https://github.com/ruhigundrelaxed/ioBroker.hyperion/raw/master/admin/hyperion.png",
+        "extIcon":                  "https://raw.githubusercontent.com/ruhigundrelaxed/ioBroker.hyperion/master/admin/hyperion.png",
         "loglevel":                 "info",
         "nondeletable":             true,
         "readme": "https://github.com/ruhigundrelaxed/ioBroker.hyperion/blob/master/README.md",
