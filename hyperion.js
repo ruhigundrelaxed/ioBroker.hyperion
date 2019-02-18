@@ -146,8 +146,8 @@ adapter.on('stateChange', function (id, state) {
 });
 
 function setcolorHSL(hue, sat, lum){
-    var myrgb = convert.hsl.rgb(hue, sat, lum);
-    var myrgbhex = convert.hsl.hex(hue, sat, lum);
+    var myrgb = convert.hsl.rgb(hue || 0, sat || 0, lum ||0);
+    var myrgbhex = convert.hsl.hex(hue || 0 , sat || 0, lum || 0);
     adapter.setState("control.activeColorRGB", "#"+myrgbhex, true);
     adapter.log.debug("setcolorHSL was called! This are our values: HUE (arg)" + hue + " Sat (arg)" + sat + " LUM (arg)" + lum + " RGB (calc)" + myrgb + " HEX (calc)" + myrgbhex + " ...calling setactiveColor_on_hyperion!");
     setactiveColor_on_hyperion(myrgb[0]+ "," + myrgb[1] + "," + myrgb[2]);
