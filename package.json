@@ -5,25 +5,36 @@
   "author": "ruhigundrelaxed<martin@qvadrat.de>",
   "homepage": "https://github.com/ruhigundrelaxed/ioBroker.hyperion/",
   "readme": "https://github.com/ruhigundrelaxed/ioBroker.hyperion/blob/master/README.md",
-  "keywords": ["ioBroker", "hyperion"],
+  "keywords": [
+    "ioBroker",
+    "hyperion"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ruhigundrelaxed/ioBroker.hyperion.git"
   },
   "dependencies": {
-      "fs": "",
-      "color-convert": "",
-      "hyperion-client" : "",
-      "type-of-is" : ""
+    "fs": "",
+    "color-convert": "",
+    "hyperion-client": "",
+    "type-of-is": "",
+    "@iobroker/adapter-core": "^1.0.3"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
     "mocha": "^4.1.0",
-    "chai": "^4.1.2"
+    "chai": "^4.1.2",
+    "@iobroker/testing": "^1.1.10"
   },
   "bugs": {
     "url": "https://github.com/ruhigundrelaxed/ioBroker.hyperion/issues"
   },
   "main": "hyperion.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "npm run test:package && npm run test:unit",
+    "test:package": "mocha test/package --exit",
+    "test:unit": "mocha test/unit --exit",
+    "test:integration": "mocha test/integration --exit"
+  }
 }
