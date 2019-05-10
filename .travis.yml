@@ -14,13 +14,13 @@ before_script:
   - node node_modules/gulp/bin/gulp default
   - rm -rf ./node_modules/iobroker.js-controller/node_modules/iobroker.admin
 env:
-  - CXX=g++-4.9
+  - CXX=g++-6
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-4.9
+      - g++-6
 script:
   - 'npm run test:package'
   - 'npm run test:unit'
