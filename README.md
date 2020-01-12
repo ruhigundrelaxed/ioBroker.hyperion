@@ -18,6 +18,9 @@ Control and configure Hyperion Lights.
 
 ## Changelog
 
+### 0.0.16 (2020-12-01)
+Fixed some wrong common type assignments. 
+
 ### 0.0.15 (2018-27-03)
 Changed Logging behaviour for clear and clear all, since node hyperion client is throwing err for clear all on some systems,
 even if everything is working as expected. 
