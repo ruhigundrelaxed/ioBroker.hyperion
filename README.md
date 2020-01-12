@@ -71,7 +71,7 @@ Please don't use it. It's not ready.
 
 The MIT License (MIT)
 
-Copyright (c) 2018 ruhigundrelaxed
+Copyright (c) 2020 ruhigundrelaxed
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
