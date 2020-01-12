@@ -287,7 +287,7 @@ function main() {
                     var my_effect_args = my_effects[effect].args;
                     var my_activator_switch = {type: 'state', common: {role: 'button',   type:'boolean', name: 'activator'}, native:{id: 'effects' + my_effect_friendly_name + '.activator'}};
                     adapter.setObject('effects' + '.' + my_effect_friendly_name  + '.activator' , my_activator_switch);
-                    var my_effect_name_obj = {type: 'state', common: {role: 'text.url', type: 'text', name: 'effect_name'}, native:{id: 'effects_effect_name'}};
+                    var my_effect_name_obj = {type: 'state', common: {role: 'text.url', type: 'string', name: 'effect_name'}, native:{id: 'effects_effect_name'}};
                     adapter.setObject('effects' + '.' + my_effect_friendly_name + '.'+ 'effects_effect_name',my_effect_name_obj);
                     adapter.setState('effects' + '.' + my_effect_friendly_name + '.'+ 'effects_effect_name',my_effects[effect].name);
                     for (var myarg in my_effect_args){
