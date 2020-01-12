@@ -149,7 +149,7 @@
             "type": "state",
             "common": {
                 "name": "LightSwitch",
-                "type": "state",
+                "type": "boolean",
                 "role": "switch",
                 "read": true,
                 "write": true,
@@ -162,7 +162,7 @@
             "type": "state",
             "common": {
                 "name": "clear",
-                "type": "state",
+                "type": "boolean",
                 "role": "button",
                 "read": true,
                 "write": true,
@@ -175,7 +175,7 @@
             "type": "state",
             "common": {
                 "name": "clearall",
-                "type": "state",
+                "type": "boolean",
                 "role": "button",
                 "read": true,
                 "write": true,
