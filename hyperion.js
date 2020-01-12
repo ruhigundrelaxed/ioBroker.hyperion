@@ -1,5 +1,5 @@
 "use strict";
-var utils = require('@iobroker/adapter-core'); // Get common adapter utils
+var utils =    require(__dirname + '/lib/utils'); // Get common adapter utils
 var adapter = new utils.Adapter('hyperion');
 var Hyperion = require('hyperion-client');
 var convert = require('color-convert');
@@ -47,8 +47,7 @@ adapter.on('stateChange', function (id, state) {
                 if (!err){
                     adapter.log.info("Clearing prio on hyperion!")
                 }else{
-                    adapter.log.info("Clearing prio on hyperion! (with ignored err: watch debug)");			
-                    adapter.log.debug("Clear throws an error. Ignore if its working! Otherwise : " + JSON.stringify(err))
+                    adapter.log.warn("Clearing prio failed! The error code is: " + JSON.stringify(err))
                 }
             });
         } else if (id_arr[3] === 'clearall') {
@@ -57,8 +56,7 @@ adapter.on('stateChange', function (id, state) {
                 if (!err){
                     adapter.log.info("Clearing all prios on hyperion!")
                 }else{
-		    adapter.log.info("Clearing all prios on hyperion! (with ignored err: watch debug)")
-                    adapter.log.debug("Clear all throws an error. Ignore if its working! Otherwise : " + JSON.stringify(err))
+                    adapter.log.warn("Clearing all prios failed! The error code is: " + JSON.stringify(err))
                 }
             });
         } else if (id_arr[3] === 'activeColorLum') {
@@ -96,7 +94,7 @@ adapter.on('stateChange', function (id, state) {
             adapter.log.debug("Control activeColorSat was set to: " + mysat + "! To do that I have to figure out Hue and Lum as well.");
             adapter.getState("control.activeColorLum", function(err, state){
                 if (!err){
-                    var mylum = state.val || 0;
+                    var mylum = state || 0;
                     adapter.log.debug("Ok! Figured out Lum:" + mylum + " Now figure out HUE!");
                     adapter.getState("control.activeColorHue", function(err, state){
                         if (!err){
@@ -146,38 +144,44 @@ adapter.on('stateChange', function (id, state) {
 });
 
 function setcolorHSL(hue, sat, lum){
-    var myrgb = convert.hsl.rgb(hue || 0, sat || 0, lum ||0);
-    var myrgbhex = convert.hsl.hex(hue || 0 , sat || 0, lum || 0);
+    var myrgb = convert.hsl.rgb(hue * 100 || 0, sat * 100 || 0, lum * 100 || 0);
+    var myrgbhex = convert.hsl.hex(hue || 0, sat || 0, lum || 0);
     adapter.setState("control.activeColorRGB", "#"+myrgbhex, true);
-    adapter.log.debug("setcolorHSL was called! This are our values: HUE (arg)" + hue + " Sat (arg)" + sat + " LUM (arg)" + lum + " RGB (calc)" + myrgb + " HEX (calc)" + myrgbhex + " ...calling setactiveColor_on_hyperion!");
-    setactiveColor_on_hyperion(myrgb[0]+ "," + myrgb[1] + "," + myrgb[2]);
+    adapter.log.debug("setcolorHSL was called! This are our values: HUE (arg)" + hue  * 360+ " Sat (arg)" + sat * 100 + " LUM (arg)" + lum * 100 + " RGB (calc)" + myrgb + " HEX (calc)" + myrgbhex + " ...calling setactiveColor_on_hyperion!");
+    adapter.log.debug("setcolorhsl: " + hue + "<->" + sat + "<->" + lum) 
+     setactiveColor_on_hyperion(myrgb[0]+ "," + myrgb[1] + "," + myrgb[2]);
 }
 
 function clean_number(number){
+adapter.log.debug("Cleaning Number :" + number + " !")
 var output_number;
+var output_collector 
+output_collector = number	
 	if (number < 0) {
-        output_number = number * (-1);
+        output_collector = output_collector * (-1);
 	}
-	if (number > 255){
-        output_number = number / 10000;
+	
+        if (output_collector > 255){
+        output_collector = output_collector / 10000;
 	}
+	output_number = output_collector;
 	if ( output_number){
-	   adapter.log.warn("The number :" + number  + " was cleaned to " + output_number + " ! This usually should not happen.");
-	   return output_number;
+	   adapter.log.warn("The number :" + number  + " was cleaned to " + output_number + " !");
+	   return output_number * 255;
     }
 	return number;
 }
 function setactiveColor_on_hyperion(color){
   adapter.log.info("Setting color to" + color);
     var myrgb = color.split(',');
-    myrgb[0] = clean_number(parseInt(myrgb[0]));
-    myrgb[1] = clean_number(parseInt(myrgb[1]));
-    myrgb[2] = clean_number(parseInt(myrgb[2]));
+    //myrgb[0] = clean_number(parseInt(myrgb[0]));
+    //myrgb[1] = clean_number(parseInt(myrgb[1]));
+    //myrgb[2] = clean_number(parseInt(myrgb[2]));
     hyperion.setColor(myrgb, function( err, result ){
         if (!err) {
             adapter.log.info('Set Color: ' + myrgb);
         } else {
-            adapter.log.warning("setColor (setactiveColor_on_hyperion) Failed with error code: " + JSON.stringify(err));
+            adapter.log.debug("setColor (setactiveColor_on_hyperion) Failed with error code: " + JSON.stringify(err));
         }
     })
 }
@@ -191,14 +195,14 @@ function setactiveColor_on_hyperion_rgb(color){
     adapter.setState("control.activeColorHue", myhsl[0], true);
     adapter.setState("control.activeColorSat", myhsl[2], true);
     adapter.setState("control.activeColorLum", myhsl[1], true);
-    myrgb[0] = clean_number(parseInt(myrgb[0]));
-    myrgb[1] = clean_number(parseInt(myrgb[1]));
-    myrgb[2] = clean_number(parseInt(myrgb[2]));
+    //myrgb[0] = clean_number(parseInt(myrgb[0]));
+    //myrgb[1] = clean_number(parseInt(myrgb[1]));
+    //myrgb[2] = clean_number(parseInt(myrgb[2]));
     hyperion.setColor(myrgb, function( err, result ){
         if (!err) {
             adapter.log.info('Set Color: ' + myrgb);
         } else {
-            adapter.log.warning("setColor (setactiveColor_on_hyperion_rgb) Failed with error code: " + JSON.stringify(err));
+            adapter.log.info("setColor (setactiveColor_on_hyperion_rgb) Failed with error code: " + JSON.stringify(err));
         }
     })
 }
@@ -244,7 +248,7 @@ function setEffect_on_hyperion(id){
                         adapter.log.info('Set effect: ' + myname);
                         //console.log(JSON.stringify(result));
                     } else {
-                        adapter.log.warning(JSON.stringify(err));
+                        adapter.log.debug(JSON.stringify(err));
                     }
                 }.bind(myname) )
             }.bind(myname))
@@ -281,7 +285,7 @@ function main() {
                     var myeffect_obj = {type: 'channel', common:{name: my_effect_friendly_name}, native:{id: 'effects' + my_effect_friendly_name}};
                     adapter.setObject('effects' + '.' + my_effect_friendly_name , myeffect_obj);
                     var my_effect_args = my_effects[effect].args;
-                    var my_activator_switch = {type: 'state', common: {role: 'button',   type:'switch', name: 'activator'}, native:{id: 'effects' + my_effect_friendly_name + '.activator'}};
+                    var my_activator_switch = {type: 'state', common: {role: 'button',   type:'boolean', name: 'activator'}, native:{id: 'effects' + my_effect_friendly_name + '.activator'}};
                     adapter.setObject('effects' + '.' + my_effect_friendly_name  + '.activator' , my_activator_switch);
                     var my_effect_name_obj = {type: 'state', common: {role: 'text.url', type: 'text', name: 'effect_name'}, native:{id: 'effects_effect_name'}};
                     adapter.setObject('effects' + '.' + my_effect_friendly_name + '.'+ 'effects_effect_name',my_effect_name_obj);
@@ -295,15 +299,15 @@ function main() {
                             adapter.setObject('effects' + '.' + my_effect_friendly_name  + '.' + my_arg_name, my_argument_obj);
                             adapter.setState('effects' + '.' + my_effect_friendly_name  + '.' + my_arg_name, my_arg);
                         }else if(Type.is(my_arg, Boolean)){
-                            my_argument_obj = {type: 'state', common: {role: 'switch', type: 'state', name: my_arg_name}, native:{id: 'effects' + my_effect_friendly_name + my_arg_name}};
+                            my_argument_obj = {type: 'state', common: {role: 'switch', type: 'boolean', name: my_arg_name}, native:{id: 'effects' + my_effect_friendly_name + my_arg_name}};
                             adapter.setObject('effects' + '.' + my_effect_friendly_name  + '.' + my_arg_name, my_argument_obj);
                             adapter.setState('effects' + '.' + my_effect_friendly_name  + '.' + my_arg_name, my_arg);
                         }else if(Type.is(my_arg, String)){
-                            my_argument_obj = {type: 'state', common: {role: 'text.url', type: 'text', name: my_arg_name}, native:{id: 'effects' + my_effect_friendly_name + my_arg_name}};
+                            my_argument_obj = {type: 'state', common: {role: 'text.url', type: 'string', name: my_arg_name}, native:{id: 'effects' + my_effect_friendly_name + my_arg_name}};
                             adapter.setObject('effects' + '.' + my_effect_friendly_name  + '.' + my_arg_name, my_argument_obj);
                             adapter.setState('effects' + '.' + my_effect_friendly_name  + '.' + my_arg_name, my_arg);
                         }else if(Type.is(my_arg, Array)){
-                            my_argument_obj  = {type: 'state', common: {role: 'level.color.rgb', type: 'state', name: my_arg_name}, native:{id: 'effects' + my_effect_friendly_name + my_arg_name}};
+                            my_argument_obj  = {type: 'state', common: {role: 'level.color.rgb', type: 'number', name: my_arg_name}, native:{id: 'effects' + my_effect_friendly_name + my_arg_name}};
                             adapter.setObject('effects' + '.' + my_effect_friendly_name  + '.' + my_arg_name , my_argument_obj);
                             adapter.setState('effects' + '.' + my_effect_friendly_name  + '.' + my_arg_name, my_arg[0] +',' + my_arg[1] + ',' +my_arg[2]);
                         }else{
@@ -321,9 +325,9 @@ function main() {
                     var my_adj_id = my_adj_elm.id || 'default';
                     var my_adj_obj = {type: 'channel', common:{name: my_adj_id}, native:{id: 'adjustment' + my_adj_id}};
                     adapter.setObject('adjustment' + '.' + my_adj_id , my_adj_obj);
-                    var my_red_Adjust = {type: 'state', common: {role: 'level.color.rgb', name: 'my_red_Adjust', type: 'state'}, native:{id: 'adjustment' + my_adj_id  + 'my_red_Adjust'}};
-                    var my_green_Adjust = {type: 'state', common: {role: 'level.color.rgb', name: 'my_green_Adjust', type: 'state'}, native:{id: 'adjustment' + my_adj_id  + 'my_green_Adjust'}};
-                    var my_blue_Adjust = {type: 'state', common: {role: 'level.color.rgb', name: 'my_blue_Adjust', type: 'state'}, native:{id: 'adjustment' + my_adj_id  + 'my_blue_Adjust'}};
+                    var my_red_Adjust = {type: 'state', common: {role: 'level.color.rgb', name: 'my_red_Adjust', type: 'number'}, native:{id: 'adjustment' + my_adj_id  + 'my_red_Adjust'}};
+                    var my_green_Adjust = {type: 'state', common: {role: 'level.color.rgb', name: 'my_green_Adjust', type: 'number'}, native:{id: 'adjustment' + my_adj_id  + 'my_green_Adjust'}};
+                    var my_blue_Adjust = {type: 'state', common: {role: 'level.color.rgb', name: 'my_blue_Adjust', type: 'number'}, native:{id: 'adjustment' + my_adj_id  + 'my_blue_Adjust'}};
                     adapter.setObject('adjustment.' + my_adj_id  + '.my_red_Adjust', my_red_Adjust);
                     adapter.setObject('adjustment.' + my_adj_id  + '.my_green_Adjust', my_green_Adjust);
                     adapter.setObject('adjustment.' + my_adj_id  + '.my_blue_Adjust', my_blue_Adjust);
