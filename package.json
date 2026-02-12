@@ -1,40 +1,45 @@
 {
   "name": "iobroker.hyperion",
-  "version": "0.0.15",
-  "description": "Adapter for using hyperion.",
-  "author": "ruhigundrelaxed<martin@qvadrat.de>",
+  "version": "1.0.0",
+  "description": "ioBroker adapter for Hyperion and Hyperion.ng ambient lighting",
+  "author": "ruhigundrelaxed <martin@qvadrat.de>",
   "homepage": "https://github.com/ruhigundrelaxed/ioBroker.hyperion/",
   "readme": "https://github.com/ruhigundrelaxed/ioBroker.hyperion/blob/master/README.md",
   "keywords": [
     "ioBroker",
-    "hyperion"
+    "hyperion",
+    "hyperion.ng",
+    "ambilight",
+    "ambient lighting"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ruhigundrelaxed/ioBroker.hyperion.git"
   },
   "dependencies": {
-    "fs": "",
-    "color-convert": "",
-    "hyperion-client": "",
-    "type-of-is": "",
-    "@iobroker/adapter-core": "^1.0.3"
+    "@iobroker/adapter-core": "^3.0.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "mocha": "^4.1.0",
-    "chai": "^4.1.2",
-    "@iobroker/testing": "^1.1.10"
+    "@iobroker/testing": "^4.0.0",
+    "@types/node": "^20.0.0",
+    "typescript": "~5.3.0"
   },
   "bugs": {
     "url": "https://github.com/ruhigundrelaxed/ioBroker.hyperion/issues"
   },
-  "main": "hyperion.js",
+  "main": "build/main.js",
   "license": "MIT",
   "scripts": {
-    "test": "npm run test:package && npm run test:unit",
-    "test:package": "mocha test/package --exit",
-    "test:unit": "mocha test/unit --exit",
-    "test:integration": "mocha test/integration --exit"
-  }
+    "build": "tsc -p tsconfig.build.json",
+    "prebuild": "rimraf build",
+    "test": "echo \"No tests yet\"",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "build/",
+    "admin/",
+    "io-package.json",
+    "LICENSE",
+    "README.md"
+  ]
 }

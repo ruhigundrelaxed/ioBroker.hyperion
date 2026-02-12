@@ -1,185 +1,80 @@
 {
     "common": {
-        "name":                     "hyperion",
-        "version":                  "0.0.16",
-        "title":                    "hyperion",
-        "titleLang":                "hyperion",
-        "license":                  "MIT",
-        "authors":                   [
-                                        "ruhigundrelaxed<martin@qvadrat.de>"
-                                    ],
-        "desc":                     {
-            "en": "Adapter to control the hyperion daemon.",
-            "de": "Adapter, um den Hyperion-Daemon zu steuern.",
-            "ru": "Адаптер для управления демоном гиперонов.",
-            "pt": "Adaptador para controlar o daemon hiperion.",
-            "nl": "Adapter om de hyperion-daemon te besturen.",
-            "fr": "Adaptateur pour contrôler le démon hyperion.",
-            "it": "Adattatore per controllare il demone hyperion.",
-            "es": "Adaptador para controlar el daemon hyperion.",
-            "pl": "Adapter do kontrolowania demona hyperion."
-          },
-        "platform":                 "Javascript/Node.js",
-        "mode":                     "daemon",
-        "icon":                     "hyperion.png",
-        "extIcon":                  "https://raw.githubusercontent.com/ruhigundrelaxed/ioBroker.hyperion/master/admin/hyperion.png",
-        "loglevel":                 "info",
-        "nondeletable":             true,
-        "readme": "https://github.com/ruhigundrelaxed/ioBroker.hyperion/blob/master/README.md",
+        "name": "hyperion",
+        "version": "1.0.0",
+        "title": "Hyperion",
+        "titleLang": {
+            "en": "Hyperion",
+            "de": "Hyperion"
+        },
+        "news": {
+            "1.0.0": {
+                "en": "Complete rewrite in TypeScript with Hyperion.ng support",
+                "de": "Kompletter Rewrite in TypeScript mit Hyperion.ng Unterstützung"
+            }
+        },
+        "license": "MIT",
+        "authors": [
+            "ruhigundrelaxed <martin@qvadrat.de>"
+        ],
+        "desc": {
+            "en": "Adapter to control Hyperion and Hyperion.ng ambient lighting",
+            "de": "Adapter zur Steuerung von Hyperion und Hyperion.ng Ambient Lighting"
+        },
+        "platform": "Javascript/Node.js",
+        "mode": "daemon",
+        "compact": true,
+        "icon": "hyperion.png",
+        "extIcon": "https://raw.githubusercontent.com/ruhigundrelaxed/ioBroker.hyperion/master/admin/hyperion.png",
+        "loglevel": "info",
         "type": "lighting",
-        "materialize": true
-
+        "adminUI": {
+            "config": "json"
+        },
+        "connectionType": "local",
+        "dataSource": "push",
+        "dependencies": [
+            {
+                "js-controller": ">=5.0.0"
+            }
+        ],
+        "globalDependencies": [],
+        "keywords": [
+            "hyperion",
+            "hyperion.ng",
+            "ambilight",
+            "ambient lighting"
+        ]
     },
     "native": {
         "address": "127.0.0.1",
-        "json_port": 19444,
-        "prio": 100
+        "port": 19444,
+        "priority": 50,
+        "origin": "ioBroker",
+        "reconnectInterval": 5,
+        "token": "",
+        "pollInterval": 30
     },
-    "objects": [
-
-    ],
+    "objects": [],
     "instanceObjects": [
         {
-            "_id": "adjustment",
-            "type": "device",
-            "common": {
-                "name": "adjustment"
-            },
-            "native": {}
-        },
-
-
-        {
-            "_id": "effects",
-            "type": "device",
-            "common": {
-                "name": "effects"
-            },
-            "native": {}
-        },
-
-        {
-            "_id": "control",
+            "_id": "info",
             "type": "channel",
             "common": {
-                "name": "control",
-                "role": "light.color"
-            },
-            "native": {}
-        },
-
-
-        {
-            "_id": "control.activeColorRGB",
-            "type": "state",
-            "common": {
-                "name": "activeColorRGB",
-                "role": "level.color.rgb",
-                "read": true,
-                "write": true,
-                "desc": "Color in RGB"
-            },
-            "native": {}
-        },
-
-
-        {
-            "_id": "control.activeColorHue",
-            "type": "state",
-            "common": {
-                "type": "number",
-                "name": "activeColorHue",
-                "role": "level.color.hue",
-                "read": true,
-                "write": true,
-                "desc": "Color HUE"
-
-
+                "name": "Information"
             },
             "native": {}
         },
         {
-            "_id": "control.activeColorSat",
+            "_id": "info.connection",
             "type": "state",
             "common": {
-                "name": "activeColorSat",
-                "type": "number",
-                "role": "level.color.saturation",
-                "read": true,
-                "write": true,
-                "min":   0,
-                "max":   100,
-                "unit":  "%",
-                "desc": "Color Saturation"
-            },
-            "native": {}
-        },
-        {
-            "_id": "control.activeColorLum",
-            "type": "state",
-            "common": {
-                "name": "activeColorLum",
-                "type": "number",
-                "role": "level.dimmer",
-                "read": true,
-                "write": true,
-                "min":   0,
-                "max":   100,
-                "unit":  "%",
-                "desc": "Color Saturation"
-            },
-            "native": {}
-        },
-
-        {
-            "_id": "control.activeEffects",
-            "type": "state",
-            "common": {
-                "name": "activeEffects",
-                "type": "string",
-                "role": "message",
-                "read": true,
-                "write": true,
-                "desc": "Currently active Effect"
-            },
-            "native": {}
-        },
-        {
-            "_id": "control.LightSwitch",
-            "type": "state",
-            "common": {
-                "name": "LightSwitch",
+                "name": "Connection status",
                 "type": "boolean",
-                "role": "switch",
+                "role": "indicator.connected",
                 "read": true,
-                "write": true,
-                "desc": "Currently active Effect"
-            },
-            "native": {}
-        },
-        {
-            "_id": "control.clear",
-            "type": "state",
-            "common": {
-                "name": "clear",
-                "type": "boolean",
-                "role": "button",
-                "read": true,
-                "write": true,
-                "desc": "Clear current prio"
-            },
-            "native": {}
-        },
-        {
-            "_id": "control.clearall",
-            "type": "state",
-            "common": {
-                "name": "clearall",
-                "type": "boolean",
-                "role": "button",
-                "read": true,
-                "write": true,
-                "desc": "Clear all prio"
+                "write": false,
+                "def": false
             },
             "native": {}
         }

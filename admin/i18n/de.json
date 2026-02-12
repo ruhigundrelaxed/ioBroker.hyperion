@@ -1,0 +1,16 @@
+{
+    "address": "Hyperion Host",
+    "addressHelp": "IP-Adresse oder Hostname des Hyperion-Servers",
+    "port": "JSON Port",
+    "portHelp": "TCP-Port für die JSON API (Standard: 19444)",
+    "priority": "Standard-Priorität",
+    "priorityHelp": "Standard-Priorität für Farb- und Effekt-Befehle (1-999)",
+    "origin": "Origin",
+    "originHelp": "Origin-Kennung für Hyperion.ng Befehle",
+    "reconnectInterval": "Reconnect Intervall (s)",
+    "reconnectIntervalHelp": "Sekunden zwischen Verbindungsversuchen",
+    "token": "Auth Token (optional)",
+    "tokenHelp": "Authentifizierungs-Token für Hyperion.ng (leer lassen wenn nicht erforderlich)",
+    "pollInterval": "Poll Intervall Classic (s)",
+    "pollIntervalHelp": "Sekunden zwischen Serverinfo-Abfragen für Classic Hyperion"
+}

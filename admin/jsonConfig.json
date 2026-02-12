@@ -1,0 +1,68 @@
+{
+    "type": "tabs",
+    "items": {
+        "connection": {
+            "type": "panel",
+            "label": "Connection",
+            "items": {
+                "address": {
+                    "type": "text",
+                    "label": "address",
+                    "sm": 8,
+                    "default": "127.0.0.1",
+                    "help": "addressHelp"
+                },
+                "port": {
+                    "type": "number",
+                    "label": "port",
+                    "sm": 4,
+                    "default": 19444,
+                    "min": 1,
+                    "max": 65535,
+                    "help": "portHelp"
+                },
+                "priority": {
+                    "type": "number",
+                    "label": "priority",
+                    "sm": 4,
+                    "default": 50,
+                    "min": 1,
+                    "max": 999,
+                    "help": "priorityHelp"
+                },
+                "origin": {
+                    "type": "text",
+                    "label": "origin",
+                    "sm": 4,
+                    "default": "ioBroker",
+                    "help": "originHelp"
+                },
+                "reconnectInterval": {
+                    "type": "number",
+                    "label": "reconnectInterval",
+                    "sm": 4,
+                    "default": 5,
+                    "min": 1,
+                    "max": 300,
+                    "help": "reconnectIntervalHelp"
+                },
+                "token": {
+                    "type": "text",
+                    "label": "token",
+                    "sm": 12,
+                    "default": "",
+                    "help": "tokenHelp"
+                },
+                "pollInterval": {
+                    "type": "number",
+                    "label": "pollInterval",
+                    "sm": 4,
+                    "default": 30,
+                    "min": 5,
+                    "max": 3600,
+                    "help": "pollIntervalHelp"
+                }
+            }
+        }
+    }
+}
