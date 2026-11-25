@@ -20,9 +20,14 @@
     "@iobroker/adapter-core": "^3.0.0"
   },
   "devDependencies": {
-    "@iobroker/testing": "^4.0.0",
+    "@iobroker/testing": "^5.3.0",
+    "@types/chai": "^4.3.20",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^20.0.0",
+    "chai": "^4.5.0",
+    "mocha": "^11.8.0",
     "rimraf": "^5.0.10",
+    "ts-node": "^10.9.2",
     "typescript": "~5.3.0"
   },
   "bugs": {
@@ -31,12 +36,16 @@
   "main": "build/main.js",
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
     "prebuild": "rimraf build",
-    "test": "echo \"No tests yet\"",
+    "build": "tsc -p tsconfig.build.json",
+    "check": "tsc --noEmit -p tsconfig.json",
+    "test:ts": "mocha --config test/mocharc.custom.json",
+    "test:package": "mocha test/package --exit",
+    "test:integration": "mocha test/integration --exit",
+    "test": "npm run test:ts && npm run test:package",
     "prepublishOnly": "npm run build"
   },
   "files": [

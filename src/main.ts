@@ -4,6 +4,7 @@ import { HyperionNg } from './lib/hyperion-ng';
 import { HyperionClassic } from './lib/hyperion-classic';
 import { StateManager } from './lib/state-manager';
 import { hexToRgb, hslToRgb } from './lib/color-utils';
+import { migrateLegacyNative } from './lib/config-migration';
 import type { HyperionProtocol, HyperionConfig, ServerInfo } from './types/hyperion';
 
 class HyperionAdapter extends utils.Adapter {
@@ -27,19 +28,9 @@ class HyperionAdapter extends utils.Adapter {
      * the legacy keys removed, so this runs only on the first start after the upgrade.
      */
     private async migrateLegacyConfig(nativeConfig: Record<string, unknown>): Promise<void> {
-        if (nativeConfig.json_port === undefined && nativeConfig.prio === undefined) {
+        const migrated = migrateLegacyNative(nativeConfig);
+        if (migrated.length === 0) {
             return;
-        }
-        const migrated: string[] = [];
-        if (nativeConfig.json_port !== undefined) {
-            const port = Number(nativeConfig.json_port);
-            if (port > 0) nativeConfig.port = port;
-            migrated.push(`json_port=${nativeConfig.json_port} -> port`);
-        }
-        if (nativeConfig.prio !== undefined) {
-            const priority = Number(nativeConfig.prio);
-            if (priority > 0) nativeConfig.priority = priority;
-            migrated.push(`prio=${nativeConfig.prio} -> priority`);
         }
         this.log.info(`Migrating configuration from 0.0.x: ${migrated.join(', ')}`);
 
@@ -47,11 +38,7 @@ class HyperionAdapter extends utils.Adapter {
             const objId = `system.adapter.${this.namespace}`;
             const obj = await this.getForeignObjectAsync(objId);
             if (obj) {
-                const native = obj.native as Record<string, unknown>;
-                native.port = nativeConfig.port;
-                native.priority = nativeConfig.priority;
-                delete native.json_port;
-                delete native.prio;
+                migrateLegacyNative(obj.native as Record<string, unknown>);
                 // Changing the instance object restarts the adapter with the new configuration.
                 await this.setForeignObjectAsync(objId, obj);
             }

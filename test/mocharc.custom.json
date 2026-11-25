@@ -1,0 +1,7 @@
+{
+    "require": ["./test/mocha.setup.js"],
+    "extension": ["ts"],
+    "spec": ["src/**/*.test.ts"],
+    "timeout": 10000,
+    "exit": true
+}

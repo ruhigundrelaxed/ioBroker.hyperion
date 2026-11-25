@@ -4,6 +4,7 @@
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.hyperion.svg)](https://www.npmjs.com/package/iobroker.hyperion)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.hyperion.svg)](https://www.npmjs.com/package/iobroker.hyperion)
+[![Test and Release](https://github.com/ruhigundrelaxed/ioBroker.hyperion/actions/workflows/test-and-release.yml/badge.svg)](https://github.com/ruhigundrelaxed/ioBroker.hyperion/actions/workflows/test-and-release.yml)
 
 [🇬🇧 English](README.md) · 🇩🇪 Deutsch
 
@@ -25,7 +26,7 @@ Seit 1.0 ist der Adapter eine komplette Neuentwicklung in TypeScript. **Update v
 
 ## Voraussetzungen
 
-- js-controller ≥ 5, Node.js ≥ 18
+- js-controller ≥ 5, Node.js ≥ 20
 - Hyperion mit aktivierter JSON-API (Standard-Port 19444)
 
 ## Konfiguration
@@ -99,6 +100,8 @@ Die alten Datenpunkte werden nicht automatisch entfernt. Sobald die Skripte ange
 ### 1.0.3 (2026-11-25)
 - Einstellungen aus 0.0.x (`json_port`, `prio`) werden automatisch übernommen
 - Build: `rimraf` als Dev-Abhängigkeit ergänzt, damit `npm run build` auf einem frischen Checkout funktioniert
+- Benötigt Node.js ≥ 20
+- Unit- und Integrationstests, CI mit GitHub Actions
 
 ### 1.0.2 (2026-10-11)
 - Neue Einstellung „Hyperion.ng-Instanz“: Der Adapter wählt diese Instanz nach jedem (Re-)Connect

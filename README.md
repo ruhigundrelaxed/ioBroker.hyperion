@@ -4,6 +4,7 @@
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.hyperion.svg)](https://www.npmjs.com/package/iobroker.hyperion)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.hyperion.svg)](https://www.npmjs.com/package/iobroker.hyperion)
+[![Test and Release](https://github.com/ruhigundrelaxed/ioBroker.hyperion/actions/workflows/test-and-release.yml/badge.svg)](https://github.com/ruhigundrelaxed/ioBroker.hyperion/actions/workflows/test-and-release.yml)
 
 🇬🇧 English · [🇩🇪 Deutsch](README_de.md)
 
@@ -25,7 +26,7 @@ Since 1.0 the adapter is a complete rewrite in TypeScript. **Upgrading from 0.0.
 
 ## Requirements
 
-- js-controller ≥ 5, Node.js ≥ 18
+- js-controller ≥ 5, Node.js ≥ 20
 - Hyperion with the JSON API enabled (default port 19444)
 
 ## Configuration
@@ -99,6 +100,8 @@ The old states are not removed automatically. Once your scripts are updated, you
 ### 1.0.3 (2026-11-25)
 - Settings from 0.0.x (`json_port`, `prio`) are migrated automatically
 - Build: `rimraf` added as dev dependency, so `npm run build` works on a fresh checkout
+- Requires Node.js ≥ 20
+- Unit and integration tests, CI with GitHub Actions
 
 ### 1.0.2 (2026-10-11)
 - New setting "Hyperion.ng instance": the adapter selects this instance after every (re)connect
