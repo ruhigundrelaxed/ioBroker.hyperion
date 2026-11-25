@@ -20,12 +20,12 @@
     "@iobroker/adapter-core": "^3.0.0"
   },
   "devDependencies": {
-    "@iobroker/testing": "^5.3.0",
+    "@iobroker/testing": "^6.3.3",
     "@types/chai": "^4.3.20",
     "@types/mocha": "^10.0.10",
     "@types/node": "^20.0.0",
     "chai": "^4.5.0",
-    "mocha": "^11.8.0",
+    "mocha": "^12.0.3",
     "rimraf": "^5.0.10",
     "ts-node": "^10.9.2",
     "typescript": "~5.3.0"
