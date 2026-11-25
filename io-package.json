@@ -1,13 +1,21 @@
 {
     "common": {
         "name": "hyperion",
-        "version": "1.0.2",
+        "version": "1.0.3",
         "title": "Hyperion",
         "titleLang": {
             "en": "Hyperion",
             "de": "Hyperion"
         },
         "news": {
+            "1.0.3": {
+                "en": "Settings from 0.0.x (json_port, prio) are migrated automatically; build fix",
+                "de": "Einstellungen aus 0.0.x (json_port, prio) werden automatisch übernommen; Build-Fix"
+            },
+            "1.0.2": {
+                "en": "Select the Hyperion.ng instance to control; origin is only sent with color/effect commands",
+                "de": "Auswahl der zu steuernden Hyperion.ng-Instanz; origin wird nur noch bei Farb-/Effektbefehlen gesendet"
+            },
             "1.0.0": {
                 "en": "Complete rewrite in TypeScript with Hyperion.ng support",
                 "de": "Kompletter Rewrite in TypeScript mit Hyperion.ng Unterstützung"

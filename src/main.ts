@@ -20,8 +20,50 @@ class HyperionAdapter extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
     }
 
+    /**
+     * 0.0.x stored the port as `json_port` and the priority as `prio`. On upgrade
+     * js-controller adds `port`/`priority` with their defaults, so a present legacy
+     * key has to win once. The values are moved into the instance configuration and
+     * the legacy keys removed, so this runs only on the first start after the upgrade.
+     */
+    private async migrateLegacyConfig(nativeConfig: Record<string, unknown>): Promise<void> {
+        if (nativeConfig.json_port === undefined && nativeConfig.prio === undefined) {
+            return;
+        }
+        const migrated: string[] = [];
+        if (nativeConfig.json_port !== undefined) {
+            const port = Number(nativeConfig.json_port);
+            if (port > 0) nativeConfig.port = port;
+            migrated.push(`json_port=${nativeConfig.json_port} -> port`);
+        }
+        if (nativeConfig.prio !== undefined) {
+            const priority = Number(nativeConfig.prio);
+            if (priority > 0) nativeConfig.priority = priority;
+            migrated.push(`prio=${nativeConfig.prio} -> priority`);
+        }
+        this.log.info(`Migrating configuration from 0.0.x: ${migrated.join(', ')}`);
+
+        try {
+            const objId = `system.adapter.${this.namespace}`;
+            const obj = await this.getForeignObjectAsync(objId);
+            if (obj) {
+                const native = obj.native as Record<string, unknown>;
+                native.port = nativeConfig.port;
+                native.priority = nativeConfig.priority;
+                delete native.json_port;
+                delete native.prio;
+                // Changing the instance object restarts the adapter with the new configuration.
+                await this.setForeignObjectAsync(objId, obj);
+            }
+        } catch (err) {
+            // Not persisted: this start still uses the migrated values, the next one migrates again.
+            this.log.warn(`Could not save migrated configuration: ${(err as Error).message}`);
+        }
+    }
+
     private async onReady(): Promise<void> {
         const nativeConfig = this.config as Record<string, unknown>;
+        await this.migrateLegacyConfig(nativeConfig);
         this.hyperionConfig = {
             address: (nativeConfig.address as string) || '127.0.0.1',
             port: (nativeConfig.port as number) || 19444,

@@ -1,92 +1,127 @@
 ![Logo](admin/hyperion.png)
-# ioBroker hyperion Adapter
-==============
 
-![Number of Installations](http://iobroker.live/badges/hyperion-installed.svg) ![Number of Installations](http://iobroker.live/badges/hyperion-stable.svg) [![NPM version](http://img.shields.io/npm/v/iobroker.hyperion.svg)](https://www.npmjs.com/package/iobroker.hyperion)
+# ioBroker.hyperion
+
+[![NPM version](https://img.shields.io/npm/v/iobroker.hyperion.svg)](https://www.npmjs.com/package/iobroker.hyperion)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.hyperion.svg)](https://www.npmjs.com/package/iobroker.hyperion)
 
-[![NPM](https://nodei.co/npm/iobroker.hyperion.png?downloads=true)](https://nodei.co/npm/iobroker.hyperion/)
+🇬🇧 English · [🇩🇪 Deutsch](README_de.md)
 
+Control [Hyperion](https://hyperion-project.org/) ambient lighting from ioBroker — both **Hyperion.ng** and the original **Hyperion Classic**.
+The adapter detects the server type automatically and talks to its JSON API over TCP.
 
-Control and configure Hyperion Lights.
+Since 1.0 the adapter is a complete rewrite in TypeScript. **Upgrading from 0.0.x? Read [Breaking changes](#breaking-changes-from-00x) first.**
 
-## Install & Configuration
+## Features
 
-1st.)   Install Hyperion and configure it. Test if all runs correctly. <br>
-2nd.)   Install this Adapter on iobroker, and configure ip and port of hyperion json interface.<br>
+- Automatic detection of Hyperion.ng and Hyperion Classic
+- Color by HEX, RGB or HSV, brightness, on/off
+- Effects: list, start by name, or start with custom arguments
+- Clear one priority or all priorities, configurable default priority
+- Hyperion.ng: components (e.g. LED device, grabber) on/off, adjustments, priorities, instance selection, token authentication
+- Push updates from Hyperion.ng (subscriptions); polling for Classic
+- Automatic reconnect with backoff
+- Multiple adapter instances can control multiple Hyperion servers or Hyperion.ng instances
 
+## Requirements
+
+- js-controller ≥ 5, Node.js ≥ 18
+- Hyperion with the JSON API enabled (default port 19444)
+
+## Configuration
+
+| Setting | Default | Description |
+|---|---|---|
+| Hyperion Host | `127.0.0.1` | IP address or hostname of the Hyperion server |
+| JSON Port | `19444` | TCP port of the JSON API |
+| Default Priority | `50` | Priority for color and effect commands (1–999; lower wins) |
+| Origin | `ioBroker` | Origin shown in Hyperion.ng for commands from this adapter |
+| Reconnect Interval (s) | `5` | Base delay between reconnection attempts |
+| Auth Token | empty | Hyperion.ng token, only needed if API authentication is enabled |
+| Hyperion.ng instance | `0` | Instance this adapter controls; selected again after every reconnect |
+| Poll Interval Classic (s) | `30` | How often Hyperion Classic is polled for its state |
+
+To control several Hyperion.ng instances (e.g. several LED strips on one server), create one adapter instance per Hyperion.ng instance.
+
+## States
+
+| State | Type | Description |
+|---|---|---|
+| `info.connection` | boolean | Connected to Hyperion |
+| `info.serverType` | string | `ng` or `classic` |
+| `info.serverVersion` | string | Hyperion version |
+| `videomode` | string | Current video mode (e.g. `2D`) |
+| `control.on` | boolean | On/off |
+| `control.color` | string | Color as HEX (`#rrggbb`) |
+| `control.red` / `.green` / `.blue` | number | Color channels 0–255 |
+| `control.hue` / `.saturation` / `.brightness` | number | Color as HSV |
+| `control.activeEffect` | string | Currently running effect |
+| `control.selectEffect` | string | Write an effect name to start it |
+| `control.priority` | number | Priority used for commands (defaults to the configured value) |
+| `control.clear` / `control.clearall` | button | Clear the adapter's priority / all priorities |
+| `effects.list` | json | Names of all available effects |
+| `effects.<name>.activate` | button | Start this effect (with the arguments below) |
+| `effects.<name>.<arg>` | mixed | Effect arguments, editable before activating |
+| `adjustment.*` | number | Brightness and other adjustments |
+| `priorities.list` | json | Active priorities |
+| `components.<name>` | boolean | Hyperion.ng only: enable/disable a component |
+| `instances.active` / `instances.list` | number / json | Hyperion.ng only: controlled instance / all instances |
+
+## Breaking changes from 0.0.x
+
+Version 1.0 is not compatible with scripts, Blockly or VIS views built for 0.0.x. The settings are migrated automatically; the states are not.
+
+**Settings** — migrated automatically on the first start after the upgrade:
+
+| 0.0.x | 1.0 |
+|---|---|
+| `json_port` | `port` |
+| `prio` | `priority` |
+
+**States** — please update your scripts and views:
+
+| 0.0.x | 1.0 |
+|---|---|
+| `control.LightSwitch` | `control.on` |
+| `control.activeColorRGB` | `control.color` (HEX) or `control.red` / `.green` / `.blue` |
+| `control.activeColorHue` | `control.hue` |
+| `control.activeColorSat` | `control.saturation` |
+| `control.activeColorLum` | `control.brightness` |
+| `contorl.activeEffects` (sic) | `control.activeEffect` (read) / `control.selectEffect` (write) |
+| `effects.<name>.activator` | `effects.<name>.activate` — the `<name>` part may differ slightly |
+| `effects.<name>.effects_effect_name` | removed; use `effects.list` |
+| `control.clear`, `control.clearall` | unchanged |
+
+The old states are not removed automatically. Once your scripts are updated, you can delete them in the Objects tab.
 
 ## Changelog
 
+### 1.0.3 (2026-11-25)
+- Settings from 0.0.x (`json_port`, `prio`) are migrated automatically
+- Build: `rimraf` added as dev dependency, so `npm run build` works on a fresh checkout
+
+### 1.0.2 (2026-10-11)
+- New setting "Hyperion.ng instance": the adapter selects this instance after every (re)connect
+- `instances.active` reports the instance actually controlled
+- `origin` is only sent with color/effect commands (Hyperion.ng rejects it on other commands)
+
+### 1.0.0 (2026-02-11)
+- Complete rewrite in TypeScript
+- Hyperion.ng support (JSON API, subscriptions, components, instances, token authentication)
+- Admin UI based on jsonConfig
+- New state structure (see [Breaking changes](#breaking-changes-from-00x))
+
 ### 0.0.16 (2020-12-01)
-Fixed some wrong common type assignments. 
+- Fixed some wrong common type assignments
 
-### 0.0.15 (2018-27-03)
-Changed Logging behaviour for clear and clear all, since node hyperion client is throwing err for clear all on some systems,
-even if everything is working as expected. 
-
-
-### 0.0.14 (2018-26-03)
-Bugfix (State = NULL fix)
-
-
-### 0.0.13 (2018-05-03)
-Bugfix (wrong Datatype for Argument prio)
-
-
-### 0.0.12 (2018-08-02)
-Admin Side Layout adjustment / added default value for priority
-
-### 0.0.11 (2018-08-02)
-Added Priority / Updated admin Side / Updated Logo
-
-### 0.0.10 (2018-17-01)
-Again massive clean up. Cleared some warnings regarding missing attributes, implemented error handling, 
-added connection monitoring... 
-
-
-### 0.0.9 (2018-13-01)
-Massive clean up, and stuff. 
-
-
-### 0.0.1 (2017-18-12)
-Still Pre Release<br>
-<br>
-Fixed Bugs:<br>
-1.) Ignoring Adapter configuration Bug -> Fixed<br>
-2.) Missing Icon -> Fixed<br>
-3.) Effect Parametrisation -> Implemented<br>
-4.) Switch to Color Bug -> Fixed<br>
-
-Todo 4 0.0.2 -> Implement Clear and Clear all
-
-
-### 0.0.0 (2017-30-11)
-Pre Release
-Known Bugs and Issues:
-This is a very early release, and it's not yet finished.
-Please don't use it. It's not ready.
+Older versions: see the [git history](https://github.com/ruhigundrelaxed/ioBroker.hyperion/commits/master).
 
 ## License
 
-The MIT License (MIT)
+MIT License — see [LICENSE](LICENSE).
 
-Copyright (c) 2020 ruhigundrelaxed
+Copyright (c) 2017-2026 ruhigundrelaxed
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+---
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+*Version 1.0 was developed with AI assistance.*

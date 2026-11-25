@@ -1,6 +1,6 @@
 {
   "name": "iobroker.hyperion",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "ioBroker adapter for Hyperion and Hyperion.ng ambient lighting",
   "author": "ruhigundrelaxed <martin@qvadrat.de>",
   "homepage": "https://github.com/ruhigundrelaxed/ioBroker.hyperion/",
@@ -22,6 +22,7 @@
   "devDependencies": {
     "@iobroker/testing": "^4.0.0",
     "@types/node": "^20.0.0",
+    "rimraf": "^5.0.10",
     "typescript": "~5.3.0"
   },
   "bugs": {
@@ -29,6 +30,9 @@
   },
   "main": "build/main.js",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "prebuild": "rimraf build",
