@@ -9,8 +9,8 @@
         },
         "news": {
             "1.0.3": {
-                "en": "Settings from 0.0.x (json_port, prio) are migrated automatically; requires Node.js 20 or newer; tests and CI",
-                "de": "Einstellungen aus 0.0.x (json_port, prio) werden automatisch übernommen; benötigt Node.js 20 oder neuer; Tests und CI"
+                "en": "Settings from 0.0.x (json_port, prio) are migrated automatically; short colors like #fff accepted; requires Node.js 20 or newer; tests and CI",
+                "de": "Einstellungen aus 0.0.x (json_port, prio) werden automatisch übernommen; kurze Farben wie #fff werden akzeptiert; benötigt Node.js 20 oder neuer; Tests und CI"
             },
             "1.0.2": {
                 "en": "Select the Hyperion.ng instance to control; origin is only sent with color/effect commands",

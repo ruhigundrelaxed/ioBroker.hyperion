@@ -3,9 +3,23 @@
  * No external dependencies.
  */
 
+/** Matches `#RRGGBB` and the short form `#RGB`, with or without `#`. */
+export const HEX_COLOR = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i;
+
+/**
+ * Parses `#RRGGBB` or `#RGB` (with or without `#`).
+ * Throws for anything else instead of silently returning black.
+ */
 export function hexToRgb(hex: string): [number, number, number] {
-    const cleaned = hex.replace(/^#/, '');
-    const num = parseInt(cleaned, 16);
+    const match = HEX_COLOR.exec(hex.trim());
+    if (!match) {
+        throw new Error(`Invalid color value: ${hex}`);
+    }
+    let digits = match[1];
+    if (digits.length === 3) {
+        digits = digits.replace(/./g, (c) => c + c);
+    }
+    const num = parseInt(digits, 16);
     return [(num >> 16) & 255, (num >> 8) & 255, num & 255];
 }
 

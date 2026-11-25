@@ -100,6 +100,7 @@ Die alten Datenpunkte werden nicht automatisch entfernt. Sobald die Skripte ange
 ### 1.0.3 (2026-11-25)
 - Einstellungen aus 0.0.x (`json_port`, `prio`) werden automatisch übernommen
 - Build: `rimraf` als Dev-Abhängigkeit ergänzt, damit `npm run build` auf einem frischen Checkout funktioniert
+- Kurze Farbwerte wie `#fff` werden akzeptiert; ungültige Farben werden nicht mehr zu Schwarz
 - Benötigt Node.js ≥ 20
 - Unit- und Integrationstests, CI mit GitHub Actions
 

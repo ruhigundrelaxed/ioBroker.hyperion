@@ -3,7 +3,7 @@ import { TcpClient } from './lib/tcp-client';
 import { HyperionNg } from './lib/hyperion-ng';
 import { HyperionClassic } from './lib/hyperion-classic';
 import { StateManager } from './lib/state-manager';
-import { hexToRgb, hslToRgb } from './lib/color-utils';
+import { HEX_COLOR, hexToRgb, hslToRgb } from './lib/color-utils';
 import { migrateLegacyNative } from './lib/config-migration';
 import type { HyperionProtocol, HyperionConfig, ServerInfo } from './types/hyperion';
 
@@ -274,8 +274,8 @@ class HyperionAdapter extends utils.Adapter {
                 if (state.val) {
                     // Turn on: set to last known color
                     const colorState = await this.getStateAsync('control.color');
-                    const hex = colorState?.val as string || '#FFFFFF';
-                    const [r, g, b] = hexToRgb(hex);
+                    const stored = String(colorState?.val ?? '');
+                    const [r, g, b] = hexToRgb(HEX_COLOR.test(stored.trim()) ? stored : '#FFFFFF');
                     await this.protocol.setColor([r, g, b], this.currentPriority);
                 } else {
                     await this.protocol.clearAll();
@@ -286,8 +286,8 @@ class HyperionAdapter extends utils.Adapter {
 
         // control.color
         if (id === 'control.color') {
-            const hex = String(state.val).replace(/^#/, '');
-            if (!/^[0-9a-fA-F]{6}$/.test(hex)) {
+            const hex = String(state.val).trim();
+            if (!HEX_COLOR.test(hex)) {
                 this.log.warn(`Invalid color value: ${state.val}`);
                 return;
             }

@@ -100,6 +100,7 @@ The old states are not removed automatically. Once your scripts are updated, you
 ### 1.0.3 (2026-11-25)
 - Settings from 0.0.x (`json_port`, `prio`) are migrated automatically
 - Build: `rimraf` added as dev dependency, so `npm run build` works on a fresh checkout
+- Short color values like `#fff` are accepted; invalid colors no longer turn into black
 - Requires Node.js ≥ 20
 - Unit and integration tests, CI with GitHub Actions
 

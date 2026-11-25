@@ -12,6 +12,22 @@ describe('color-utils', () => {
             expect(hexToRgb('#000000')).to.deep.equal([0, 0, 0]);
             expect(hexToRgb('#ffffff')).to.deep.equal([255, 255, 255]);
         });
+
+        it('parses the short form #RGB', () => {
+            expect(hexToRgb('#fff')).to.deep.equal([255, 255, 255]);
+            expect(hexToRgb('#F80')).to.deep.equal([255, 136, 0]);
+            expect(hexToRgb('0a5')).to.deep.equal([0, 170, 85]);
+        });
+
+        it('ignores surrounding whitespace', () => {
+            expect(hexToRgb(' #FF8000 ')).to.deep.equal([255, 128, 0]);
+        });
+
+        it('rejects invalid values instead of returning black', () => {
+            for (const bad of ['', '#', 'red', '#ff', '#ffff', '#12345', '#1234567', '#GGGGGG', '#ff 000']) {
+                expect(() => hexToRgb(bad), JSON.stringify(bad)).to.throw('Invalid color value');
+            }
+        });
     });
 
     describe('rgbToHex', () => {
