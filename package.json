@@ -20,7 +20,7 @@
     "@iobroker/adapter-core": "^3.0.0"
   },
   "devDependencies": {
-    "@iobroker/testing": "^4.0.0",
+    "@iobroker/testing": "^6.3.3",
     "@types/node": "^20.0.0",
     "rimraf": "^5.0.10",
     "typescript": "~5.3.0"
