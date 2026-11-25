@@ -22,7 +22,7 @@
   "devDependencies": {
     "@iobroker/testing": "^4.0.0",
     "@types/node": "^20.0.0",
-    "rimraf": "^5.0.10",
+    "rimraf": "^6.1.4",
     "typescript": "~5.3.0"
   },
   "bugs": {
