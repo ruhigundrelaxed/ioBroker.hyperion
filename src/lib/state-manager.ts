@@ -18,6 +18,9 @@ export class StateManager {
     private serverType: 'classic' | 'ng' = 'classic';
     private colorSyncLock = false;
 
+    /** Hyperion.ng instance currently selected on this connection */
+    activeInstance = 0;
+
     constructor(adapter: ioBroker.Adapter) {
         this.adapter = adapter;
     }
@@ -423,8 +426,8 @@ export class StateManager {
     async syncInstances(instances: InstanceInfo[]): Promise<void> {
         await this.ensureChannel('instances', 'Instances');
 
-        const running = instances.find((i) => i.running);
-        await this.ensureState('instances.active', running?.instance ?? 0, {
+        // Report the instance this adapter actually controls, not just the first running one
+        await this.ensureState('instances.active', this.activeInstance, {
             name: 'Active instance',
             type: 'number',
             role: 'level',

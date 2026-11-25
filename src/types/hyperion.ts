@@ -102,6 +102,8 @@ export interface HyperionConfig {
     reconnectInterval: number;
     token: string;
     pollInterval: number;
+    /** Hyperion.ng instance to control (switched to after every (re)connect) */
+    instance: number;
 }
 
 // ===== Protocol Interface =====

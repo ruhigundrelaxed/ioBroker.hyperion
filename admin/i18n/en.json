@@ -11,6 +11,8 @@
     "reconnectIntervalHelp": "Seconds between reconnection attempts",
     "token": "Auth Token (optional)",
     "tokenHelp": "Authentication token for Hyperion.ng (leave empty if not required)",
+    "instance": "Hyperion.ng instance",
+    "instanceHelp": "Instance number to control (0 = first instance); re-selected after every reconnect",
     "pollInterval": "Poll Interval Classic (s)",
     "pollIntervalHelp": "Seconds between serverinfo polls for Classic Hyperion"
 }

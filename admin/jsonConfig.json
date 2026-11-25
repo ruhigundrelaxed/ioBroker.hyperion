@@ -53,6 +53,15 @@
                     "default": "",
                     "help": "tokenHelp"
                 },
+                "instance": {
+                    "type": "number",
+                    "label": "instance",
+                    "sm": 4,
+                    "default": 0,
+                    "min": 0,
+                    "max": 99,
+                    "help": "instanceHelp"
+                },
                 "pollInterval": {
                     "type": "number",
                     "label": "pollInterval",

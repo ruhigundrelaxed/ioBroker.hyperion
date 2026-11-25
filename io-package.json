@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "hyperion",
-        "version": "1.0.0",
+        "version": "1.0.2",
         "title": "Hyperion",
         "titleLang": {
             "en": "Hyperion",
@@ -53,7 +53,8 @@
         "origin": "ioBroker",
         "reconnectInterval": 5,
         "token": "",
-        "pollInterval": 30
+        "pollInterval": 30,
+        "instance": 0
     },
     "objects": [],
     "instanceObjects": [

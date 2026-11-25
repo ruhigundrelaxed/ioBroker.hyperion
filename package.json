@@ -1,6 +1,6 @@
 {
   "name": "iobroker.hyperion",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "ioBroker adapter for Hyperion and Hyperion.ng ambient lighting",
   "author": "ruhigundrelaxed <martin@qvadrat.de>",
   "homepage": "https://github.com/ruhigundrelaxed/ioBroker.hyperion/",

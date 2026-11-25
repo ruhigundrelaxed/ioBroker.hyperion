@@ -30,6 +30,7 @@ class HyperionAdapter extends utils.Adapter {
             reconnectInterval: (nativeConfig.reconnectInterval as number) || 5,
             token: (nativeConfig.token as string) || '',
             pollInterval: (nativeConfig.pollInterval as number) || 30,
+            instance: Number(nativeConfig.instance) || 0,
         };
 
         this.currentPriority = this.hyperionConfig.priority;
@@ -84,6 +85,11 @@ class HyperionAdapter extends utils.Adapter {
                     }
                 }
 
+                // Instance selection is per connection, so it has to be repeated after every reconnect
+                if (this.hyperionConfig.instance !== 0) {
+                    await this.selectInstance(ng, this.hyperionConfig.instance);
+                }
+
                 // Get system info for version
                 try {
                     const sysInfo = await ng.getSysInfo();
@@ -115,6 +121,22 @@ class HyperionAdapter extends utils.Adapter {
         } catch (err) {
             this.log.error(`Setup failed: ${(err as Error).message}`);
             await this.setStateAsync('info.connection', false, true);
+        }
+    }
+
+    /**
+     * Switch the connection to another Hyperion.ng instance and reload its state
+     * (effects, priorities, adjustments differ per instance).
+     */
+    private async selectInstance(ng: HyperionNg, instance: number): Promise<void> {
+        try {
+            await ng.switchInstance(instance);
+            this.stateManager.activeInstance = instance;
+            this.log.info(`Switched to Hyperion instance ${instance}`);
+            await this.stateManager.initFromServerInfo(await ng.getServerInfo());
+            await this.setStateAsync('instances.active', instance, true);
+        } catch (err) {
+            this.log.warn(`Switching to instance ${instance} failed: ${(err as Error).message}`);
         }
     }
 
@@ -362,8 +384,7 @@ class HyperionAdapter extends utils.Adapter {
 
         // instances.active (ng only)
         if (id === 'instances.active' && this.protocol.type === 'ng') {
-            const ng = this.protocol as HyperionNg;
-            await ng.switchInstance(Number(state.val));
+            await this.selectInstance(this.protocol as HyperionNg, Number(state.val));
             return;
         }
 

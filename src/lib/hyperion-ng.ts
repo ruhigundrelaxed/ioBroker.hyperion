@@ -79,8 +79,11 @@ export class HyperionNg extends EventEmitter implements HyperionProtocol {
                 reject(new Error(`Command timeout: ${cmd.command}`));
             }, timeout);
             this.pending.set(tan, { resolve, reject, timeout: timer });
+            // Hyperion.ng validates strictly: "origin" is only part of the color/effect schema,
+            // any other command (e.g. authorize) is rejected with "Invalid params" if it is present.
+            const withOrigin = cmd.command === 'color' || cmd.command === 'effect';
             try {
-                this.client.send({ ...cmd, tan, origin: this.origin });
+                this.client.send(withOrigin ? { ...cmd, tan, origin: this.origin } : { ...cmd, tan });
             } catch (err) {
                 clearTimeout(timer);
                 this.pending.delete(tan);
@@ -219,7 +222,6 @@ export class HyperionNg extends EventEmitter implements HyperionProtocol {
                     command: event,
                     subcommand: 'subscribe',
                     tan: this.nextTan(),
-                    origin: this.origin,
                 });
             }
         } catch {
